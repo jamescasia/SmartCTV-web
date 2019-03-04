@@ -1,0 +1,21 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+.MainApp div :nth-child(1) {
+  display: flex;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+}
+.vidContainer {
+  display: flex;
+  align-items: center;
+}
+.vidContainer svg:hover {
+  cursor: pointer;
+}
+.App {
+  display: flex;
+  justify-content: center;
+}
