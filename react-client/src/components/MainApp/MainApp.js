@@ -7,7 +7,7 @@ class MainApp extends Component{
         super(props)
 
         this.state = {
-
+            camerasId: 860739031129937
         }
     }
 
@@ -16,11 +16,19 @@ class MainApp extends Component{
     }
 
     handleLeftClick = () => {
-        console.log('left clicked')
-    }
+        let newKey = 'a' + this.props.database.ref().push().key
+        // this.props.database.ref().child(`users/${this.props.user}/cameras/${this.state.camerasId}`).update({
+        this.props.database.ref().child(`users/userID/cameras/${this.state.camerasId}`).update({
+            action: newKey
+        })
+       }
 
     handleRightClick = () => {
-        console.log('right clicked')
+        let newKey = 'b' + this.props.database.ref().push().key
+        // this.props.database.ref().child(`users/${this.props.user}/cameras/${this.state.camerasId}`).update({
+        this.props.database.ref().child(`users/userID/cameras/${this.state.camerasId}`).update({
+            action: newKey
+        })
     }
 
     render(){

@@ -4,6 +4,7 @@ import * as firebase from 'firebase'
 import AuthPage from './AuthPage/AuthPage'
 import MainApp from './MainApp/MainApp'
 
+
 const Auth = (AuthPage) => (MainApp) => class extends Component{
     constructor(props){
         super(props)
@@ -20,16 +21,27 @@ const Auth = (AuthPage) => (MainApp) => class extends Component{
                 this.setState({
                     isAuthenticated: true
                 })
+
+                // this.props.database.ref().child(`users/${user.uid}`).on('value', (snap) => {
+                this.props.database.ref().child(`users/userID`).on('value', (snap) => {
+                    if(snap.val()){
+                        this.setState({
+                            user: user.uid
+                        })
+                    }else{
+                        console.log('no data for user')
+                    }
+                })
             }else{
                 this.setState({
-                    isAuthenticated: false
+                    isAuthenticated: false,
                 })
             }
         })
     }
     render(){
         if(this.state.isAuthenticated){
-            return <MainApp/>
+            return <MainApp database = {this.props.database} user = {this.state.user}/>
         }else{
             return <AuthPage/>
         }
