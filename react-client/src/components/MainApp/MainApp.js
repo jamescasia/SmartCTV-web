@@ -9,6 +9,15 @@ class MainApp extends Component{
         this.state = {
             camerasId: 860739031129937
         }
+        this.subscriberEventHandlers = {
+            connected: event => {
+                // console.log(event.target.session.connection.getPublisherForStream(event))
+                console.log(event)
+            },
+            videoEnabled: event => {
+                console.log('Subscriber video enabled!');
+            }
+        };
     }
 
     componentDidMount(){
@@ -39,7 +48,7 @@ class MainApp extends Component{
                     <OTStreams>
                         <div className = 'vidContainer'>
                             <ChevronLeft onClick = {this.handleLeftClick}/>
-                                <OTSubscriber/>
+                                <OTSubscriber eventHandlers = {this.subscriberEventHandlers}/>
                             <ChevronRight onClick = {this.handleRightClick}/>
                         </div>
                     </OTStreams>

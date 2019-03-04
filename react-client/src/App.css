@@ -3,6 +3,9 @@
   margin: 0;
   box-sizing: border-box;
 }
+.MainApp {
+  width: 100%;
+}
 .MainApp div :nth-child(1) {
   display: flex;
   justify-content: flex-start;
@@ -11,6 +14,7 @@
 .vidContainer {
   display: flex;
   align-items: center;
+  margin: 10px 0;
 }
 .vidContainer svg:hover {
   cursor: pointer;
