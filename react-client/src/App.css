@@ -3,6 +3,9 @@
   margin: 0;
   box-sizing: border-box;
 }
+.MainApp {
+  width: 100%;
+}
 .MainApp div :nth-child(1) {
   display: flex;
   justify-content: flex-start;
@@ -11,8 +14,21 @@
 .vidContainer {
   display: flex;
   align-items: center;
+  margin: 10px 0;
+  position: relative;
 }
 .vidContainer svg:hover {
+  cursor: pointer;
+}
+.vidContainer .scanToggle {
+  position: absolute;
+  bottom: -35px;
+  left: 40%;
+  border: 1px solid black;
+  padding: 1px 5px;
+}
+.vidContainer .scanToggle:hover {
+  background-color: bisque;
   cursor: pointer;
 }
 .App {
