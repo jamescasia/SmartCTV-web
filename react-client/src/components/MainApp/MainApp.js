@@ -13,9 +13,14 @@ class MainApp extends Component{
         this.subscriberEventHandlers = {
             connected: event => {
                 // console.log(event.target.session.getPublisherForStream(event.target.stream))
-                console.log(event.target.stream.name)
+                event.target.element.parentElement.parentElement.firstChild.addEventListener('click', () => {
+                    this.handleLeftClick(event.target.stream.name)
+                })
+                event.target.element.parentElement.parentElement.lastChild.addEventListener('click', () => {
+                    this.handleRightClick(event.target.stream.name)
+                })
                 this.setState({
-                    camerasId: [...this.state.cameraIds, event.target.stream.name]
+                    cameraIds: [...this.state.cameraIds, event.target.stream.name]
                 })
             },
             videoEnabled: event => {
@@ -25,27 +30,28 @@ class MainApp extends Component{
     }
 
     componentDidMount(){
-
+        let vidContainers = document.querySelectorAll('.vidContainer')
+        console.log(vidContainers)
     }
 
-    handleLeftClick = () => {
+    handleLeftClick = cameraName => {
         let newKey = 'a' + this.props.database.ref().push().key
         // this.props.database.ref().child(`users/${this.props.user}/cameras/${this.state.camerasId}`).update({
-        this.props.database.ref().child(`users/userID/cameras/${this.state.cameraIds}`).update({
+        this.props.database.ref().child(`users/userID/cameras/${cameraName}`).update({
             action: newKey
         })
        }
 
-    handleRightClick = () => {
+    handleRightClick = cameraName => {
         let newKey = 'b' + this.props.database.ref().push().key
         // this.props.database.ref().child(`users/${this.props.user}/cameras/${this.state.camerasId}`).update({
-        this.props.database.ref().child(`users/userID/cameras/${this.state.camerasId}`).update({
+        this.props.database.ref().child(`users/userID/cameras/${cameraName}`).update({
             action: newKey
         })
     }
 
     handleVidContainerClick = e => {
-        console.log(e)
+        console.log(e.relatedTarget)
     }
 
     render(){
@@ -55,9 +61,9 @@ class MainApp extends Component{
                 <OTSession apiKey = '46278792' sessionId = '1_MX40NjI3ODc5Mn5-MTU1MTQ1MjEwOTY5Mn4zWmpFSVE5V2xoNWwvL2liaWE3cEgyWmZ-fg' token = 'T1==cGFydG5lcl9pZD00NjI3ODc5MiZzaWc9OGFjN2ZmMTgzOGFiYjg1YmE0OWNkZjVjMTUyNzY5MTA4NDYwNDAzNTpzZXNzaW9uX2lkPTFfTVg0ME5qSTNPRGM1TW41LU1UVTFNVFExTWpFd09UWTVNbjR6V21wRlNWRTVWMnhvTld3dkwybGlhV0UzY0VneVdtWi1mZyZjcmVhdGVfdGltZT0xNTUxNDUyMTQxJm5vbmNlPTAuNDc0NzA0Mjk2Njc4Mzk4MyZyb2xlPXB1Ymxpc2hlciZleHBpcmVfdGltZT0xNTU0MDQwNTM4JmluaXRpYWxfbGF5b3V0X2NsYXNzX2xpc3Q9'>
                     <OTStreams>
                         <div onClick = {this.handleVidContainerClick} className = 'vidContainer'>
-                            <ChevronLeft onClick = {this.handleLeftClick}/>
+                            <ChevronLeft  className = 'leftPan'/>
                                 <OTSubscriber eventHandlers = {this.subscriberEventHandlers}/>
-                            <ChevronRight onClick = {this.handleRightClick}/>
+                            <ChevronRight  className = 'rightPan'/>
                         </div>
                     </OTStreams>
                 </OTSession>
