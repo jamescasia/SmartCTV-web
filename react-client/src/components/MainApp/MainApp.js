@@ -1,13 +1,14 @@
 import React, {Component} from 'react'
 import {OTSession,OTStreams, OTSubscriber, preloadScript} from 'opentok-react'
-import {ChevronLeft, ChevronRight} from 'react-feather'
+import {ChevronLeft, ChevronRight, ToggleLeft, ToggleRight} from 'react-feather'
+import { EventEmitter } from 'events';
 
 class MainApp extends Component{
     constructor(props){
         super(props)
 
         this.state = {
-            cameraIds: []
+            cameras: []
         }
 
         this.subscriberEventHandlers = {
@@ -19,8 +20,12 @@ class MainApp extends Component{
                 event.target.element.parentElement.parentElement.lastChild.addEventListener('click', () => {
                     this.handleRightClick(event.target.stream.name)
                 })
+                event.target.element.parentElement.parentElement.children[2].addEventListener('click', () => {
+                    let cameraData = this.state.cameras.find(camera => camera.id === event.target.stream.name)
+                    this.handleToggleClick(cameraData.id)
+                })
                 this.setState({
-                    cameraIds: [...this.state.cameraIds, event.target.stream.name]
+                    cameras: [...this.state.cameras, {id: event.target.stream.name, isScanning: false} ]
                 })
             },
             videoEnabled: event => {
@@ -50,8 +55,23 @@ class MainApp extends Component{
         })
     }
 
+    handleToggleClick = cameraId => {
+        this.setState({
+            cameras: this.state.cameras.map(camera => {
+                if(camera.id === cameraId){
+                    let newKey = 'c' + this.props.database.ref().push().key
+                    this.props.database.ref().child(`users/userID/cameras/${cameraId}`).update({
+                        scanning: newKey
+                    })
+                    return {...camera, isScanning: !camera.isScanning}
+                }
+                return camera
+            })
+        })
+    }
+
     handleVidContainerClick = e => {
-        console.log(e.relatedTarget)
+        // console.log(e.relatedTarget)
     }
 
     render(){
@@ -63,6 +83,7 @@ class MainApp extends Component{
                         <div onClick = {this.handleVidContainerClick} className = 'vidContainer'>
                             <ChevronLeft  className = 'leftPan'/>
                                 <OTSubscriber eventHandlers = {this.subscriberEventHandlers}/>
+                                <div className = 'scanToggle'>{!this.state.isScanning ? <ToggleLeft/> : <ToggleRight/>}</div>
                             <ChevronRight  className = 'rightPan'/>
                         </div>
                     </OTStreams>
