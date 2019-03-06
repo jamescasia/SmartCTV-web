@@ -29,7 +29,8 @@ function handleError(error) {
     var publisher = OT.initPublisher('publisher', {
       insertMode: 'append',
       width: '100%',
-      height: '100%'
+      height: '100%',
+      name: 'Wassuh'
     }, handleError);
   
     // Connect to the session
