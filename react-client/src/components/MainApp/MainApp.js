@@ -20,7 +20,7 @@ class MainApp extends Component{
                 event.target.element.parentElement.parentElement.lastChild.addEventListener('click', () => {
                     this.handleRightClick(event.target.stream.name)
                 })
-                event.target.element.parentElement.parentElement.children[2].addEventListener('click', () => {
+                event.target.element.parentElement.parentElement.children[2].addEventListener('click', (e) => {
                     let cameraData = this.state.cameras.find(camera => camera.id === event.target.stream.name)
                     this.handleToggleClick(cameraData.id)
                 })
@@ -82,8 +82,9 @@ class MainApp extends Component{
                     <OTStreams>
                         <div onClick = {this.handleVidContainerClick} className = 'vidContainer'>
                             <ChevronLeft  className = 'leftPan'/>
+                                {console.log(this.props)}
                                 <OTSubscriber eventHandlers = {this.subscriberEventHandlers}/>
-                                <div className = 'scanToggle'>{!this.state.isScanning ? <ToggleLeft/> : <ToggleRight/>}</div>
+                                <div className = 'scanToggle'>toggle</div>
                             <ChevronRight  className = 'rightPan'/>
                         </div>
                     </OTStreams>
