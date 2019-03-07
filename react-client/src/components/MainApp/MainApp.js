@@ -2,6 +2,7 @@ import React, {Component} from 'react'
 import {OTSession,OTStreams, OTSubscriber, preloadScript} from 'opentok-react'
 import {ChevronLeft, ChevronRight, ToggleLeft, ToggleRight} from 'react-feather'
 import { EventEmitter } from 'events';
+import firebase from 'firebase'
 
 class MainApp extends Component{
     constructor(props){
@@ -59,6 +60,10 @@ class MainApp extends Component{
         })
     }
 
+    handleSignOut = () => {
+        firebase.auth().signOut()
+    }
+
     handleToggleClick = cameraId => {
         this.setState({
             cameras: this.state.cameras.map(camera => {
@@ -92,6 +97,12 @@ class MainApp extends Component{
                         </div>
                     </OTStreams>
                 </OTSession>
+                <div className = 'sideBar'>
+                    <button onClick = {this.handleSignOut} className = 'signOutButton'>signOut</button>
+                    <ul>
+                        <li>Maybe Some stats Here.</li>
+                    </ul>
+                </div>
             </div>
         )
     }
