@@ -2,18 +2,24 @@ import React, {Component} from 'react'
 import {OTSession,OTStreams, OTSubscriber, preloadScript} from 'opentok-react'
 import {ChevronLeft, ChevronRight, ToggleLeft, ToggleRight} from 'react-feather'
 import { EventEmitter } from 'events';
+import firebase from 'firebase'
 
 class MainApp extends Component{
     constructor(props){
         super(props)
 
         this.state = {
-            cameras: []
+            cameras: [],
         }
 
         this.subscriberEventHandlers = {
+            videoEnabled: event => {
+                //@BUG doesn't get called
+                console.log('Subscriber video enabled!');
+                
+            },
             connected: event => {
-                // console.log(event.target.session.getPublisherForStream(event.target.stream))
+                console.log(event.target.isSubscribing())
                 event.target.element.parentElement.parentElement.firstChild.addEventListener('click', () => {
                     this.handleLeftClick(event.target.stream.name)
                 })
@@ -27,16 +33,15 @@ class MainApp extends Component{
                 this.setState({
                     cameras: [...this.state.cameras, {id: event.target.stream.name, isScanning: false} ]
                 })
+                
             },
-            videoEnabled: event => {
-                console.log('Subscriber video enabled!');
-            }
+            
+            
         };
     }
 
     componentDidMount(){
-        let vidContainers = document.querySelectorAll('.vidContainer')
-        console.log(vidContainers)
+        // let vidContainers = document.querySelectorAll('.vidContainer')
     }
 
     handleLeftClick = cameraName => {
@@ -53,6 +58,10 @@ class MainApp extends Component{
         this.props.database.ref().child(`users/userID/cameras/${cameraName}`).update({
             action: newKey
         })
+    }
+
+    handleSignOut = () => {
+        firebase.auth().signOut()
     }
 
     handleToggleClick = cameraId => {
@@ -82,13 +91,18 @@ class MainApp extends Component{
                     <OTStreams>
                         <div onClick = {this.handleVidContainerClick} className = 'vidContainer'>
                             <ChevronLeft  className = 'leftPan'/>
-                                {console.log(this.props)}
                                 <OTSubscriber eventHandlers = {this.subscriberEventHandlers}/>
                                 <div className = 'scanToggle'>toggle</div>
                             <ChevronRight  className = 'rightPan'/>
                         </div>
                     </OTStreams>
                 </OTSession>
+                <div className = 'sideBar'>
+                    <button onClick = {this.handleSignOut} className = 'signOutButton'>signOut</button>
+                    <ul>
+                        <li>Maybe Some stats Here.</li>
+                    </ul>
+                </div>
             </div>
         )
     }

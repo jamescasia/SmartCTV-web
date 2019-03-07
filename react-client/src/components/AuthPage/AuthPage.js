@@ -26,17 +26,17 @@ export default class AuthPage extends Component{
 
     render(){
         return(
-            <div>
+            <>
                 <form onSubmit = {e=>e.preventDefault()}>
                     <input name = 'email' type = 'email' placeholder = 'email' value = {this.state.email} onChange = {this.handleChange}/>
                     <input name = 'password' type = 'password' placeholder = 'password' value = {this.state.password} onChange = {this.handleChange}/>
                     
                     <div>
-                        <input type = 'submit' value = 'Sign Up'/>
-                        <input type = 'submit' value = 'Log In' onClick = {this.logIn}/>
+                        <input type = 'submit' value = 'Sign Up' className = 'button signup'/>
+                        <input type = 'submit' value = 'Log In' onClick = {this.logIn} className = 'button login'/>
                     </div>
                 </form>
-            </div>
+            </>
         )
     }
 }

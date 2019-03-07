@@ -3,13 +3,45 @@
   margin: 0;
   box-sizing: border-box;
 }
+.buttonBase {
+  padding: 5px;
+  border: 1px solid black;
+  margin: 10px;
+  background: none;
+}
+.buttonBase:hover {
+  cursor: pointer;
+  background: rgba(255, 255, 255, 0.5);
+}
 .MainApp {
+  display: flex;
+  position: relative;
   width: 100%;
+}
+.MainApp :nth-child(1) {
+  flex-grow: 1;
+}
+.MainApp .sideBar {
+  width: 300px;
+}
+.MainApp .sideBar .signOutButton {
+  padding: 5px;
+  border: 1px solid black;
+  margin: 10px;
+  background: none;
+}
+.MainApp .sideBar .signOutButton:hover {
+  cursor: pointer;
+  background: rgba(255, 255, 255, 0.5);
+}
+.MainApp div {
+  padding-bottom: 15px;
 }
 .MainApp div :nth-child(1) {
   display: flex;
   justify-content: flex-start;
   flex-wrap: wrap;
+  flex-grow: 0;
 }
 .vidContainer {
   display: flex;
@@ -22,7 +54,7 @@
 }
 .vidContainer .scanToggle {
   position: absolute;
-  bottom: -35px;
+  bottom: -15px;
   left: 40%;
   border: 1px solid black;
   padding: 1px 5px;
@@ -31,7 +63,39 @@
   background-color: bisque;
   cursor: pointer;
 }
+form {
+  display: flex;
+  flex-direction: column;
+  height: fit-content;
+  align-self: center;
+}
+form input {
+  margin: 5px 0;
+  padding: 5px;
+  border: 1px solid black;
+}
+form input:focus {
+  outline: none;
+  border: 2px solid black;
+}
+form div {
+  display: flex;
+  justify-content: center;
+}
+form div .button {
+  padding: 5px;
+  border: 1px solid black;
+  margin: 10px;
+  background: none;
+}
+form div .button:hover {
+  cursor: pointer;
+  background: rgba(255, 255, 255, 0.5);
+}
 .App {
   display: flex;
   justify-content: center;
+  min-height: 100vh;
+  background: #00887a;
+  background: linear-gradient(130deg, rgba(0, 136, 122, 0.98112749) 0%, #d3e3fc 100%);
 }
