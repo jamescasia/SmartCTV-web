@@ -8,12 +8,17 @@ class MainApp extends Component{
         super(props)
 
         this.state = {
-            cameras: []
+            cameras: [],
         }
 
         this.subscriberEventHandlers = {
+            videoEnabled: event => {
+                //@BUG doesn't get called
+                console.log('Subscriber video enabled!');
+                
+            },
             connected: event => {
-                // console.log(event.target.session.getPublisherForStream(event.target.stream))
+                console.log(event.target.isSubscribing())
                 event.target.element.parentElement.parentElement.firstChild.addEventListener('click', () => {
                     this.handleLeftClick(event.target.stream.name)
                 })
@@ -27,16 +32,15 @@ class MainApp extends Component{
                 this.setState({
                     cameras: [...this.state.cameras, {id: event.target.stream.name, isScanning: false} ]
                 })
+                
             },
-            videoEnabled: event => {
-                console.log('Subscriber video enabled!');
-            }
+            
+            
         };
     }
 
     componentDidMount(){
-        let vidContainers = document.querySelectorAll('.vidContainer')
-        console.log(vidContainers)
+        // let vidContainers = document.querySelectorAll('.vidContainer')
     }
 
     handleLeftClick = cameraName => {
@@ -82,7 +86,6 @@ class MainApp extends Component{
                     <OTStreams>
                         <div onClick = {this.handleVidContainerClick} className = 'vidContainer'>
                             <ChevronLeft  className = 'leftPan'/>
-                                {console.log(this.props)}
                                 <OTSubscriber eventHandlers = {this.subscriberEventHandlers}/>
                                 <div className = 'scanToggle'>toggle</div>
                             <ChevronRight  className = 'rightPan'/>
