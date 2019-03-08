@@ -52,7 +52,28 @@ class MainApp extends Component{
     }
 
     componentDidMount(){
-        // let vidContainers = document.querySelectorAll('.vidContainer')
+        this.updateViewerNum(1)
+        
+        /**
+         * decrement Viewer count on close.
+         */
+        window.addEventListener('beforeunload', (e) => {  
+        e.preventDefault();
+        this.updateViewerNum(-1)
+        return e.returnValue = 'Are you sure you want to close?';
+        });
+    }
+
+    componentWillUnmount(){
+        window.removeEventListener('beforeunload')
+    }
+
+    updateViewerNum = (updateBy) => {
+        this.props.database.ref().child('users/userID/viewers').once('value').then(snap => {
+        this.props.database.ref().child('users/userID/').update({
+            viewers: snap.val() + updateBy,
+        })
+        })
     }
 
     handleLeftClick = cameraName => {
