@@ -30,6 +30,17 @@ class MainApp extends Component{
                     let cameraData = this.state.cameras.find(camera => camera.id === event.target.stream.name)
                     this.handleToggleClick(cameraData.id)
                 })
+
+                /**
+                 * Just for UI expanding a video.
+                 */
+                event.target.element.addEventListener('dblclick', e => {
+                    console.log(e.currentTarget.id)
+                    e.currentTarget.classList.toggle('focused')
+                    this.setState({
+                        focusedCamera: event.target.stream.id
+                    })
+                })
                 this.setState({
                     cameras: [...this.state.cameras, {id: event.target.stream.name, isScanning: false} ]
                 })
@@ -87,7 +98,7 @@ class MainApp extends Component{
 
         return(
             <div className = 'MainApp'>
-                <OTSession apiKey = '46278792' sessionId = '1_MX40NjI3ODc5Mn5-MTU1MTQ1MjEwOTY5Mn4zWmpFSVE5V2xoNWwvL2liaWE3cEgyWmZ-fg' token = 'T1==cGFydG5lcl9pZD00NjI3ODc5MiZzaWc9OGFjN2ZmMTgzOGFiYjg1YmE0OWNkZjVjMTUyNzY5MTA4NDYwNDAzNTpzZXNzaW9uX2lkPTFfTVg0ME5qSTNPRGM1TW41LU1UVTFNVFExTWpFd09UWTVNbjR6V21wRlNWRTVWMnhvTld3dkwybGlhV0UzY0VneVdtWi1mZyZjcmVhdGVfdGltZT0xNTUxNDUyMTQxJm5vbmNlPTAuNDc0NzA0Mjk2Njc4Mzk4MyZyb2xlPXB1Ymxpc2hlciZleHBpcmVfdGltZT0xNTU0MDQwNTM4JmluaXRpYWxfbGF5b3V0X2NsYXNzX2xpc3Q9'>
+                <OTSession apiKey = '46283042' sessionId = '1_MX40NjI4MzA0Mn5-MTU1MjAxOTA0Nzc3Nn4xN0EzN0ZueXd5S0UvS3J4OUNqTWRkOWx-fg' token = 'T1==cGFydG5lcl9pZD00NjI4MzA0MiZzaWc9MTBiMzdkMjdiODlhYzE2ZWMxNTgxZTQzNTBhNmZkN2QxMDMyYTkxNTpzZXNzaW9uX2lkPTFfTVg0ME5qSTRNekEwTW41LU1UVTFNakF4T1RBME56YzNObjR4TjBFek4wWnVlWGQ1UzBVdlMzSjRPVU5xVFdSa09XeC1mZyZjcmVhdGVfdGltZT0xNTUyMDE5MDcwJm5vbmNlPTAuODY0MTY0NDE0NTQzMTU5NyZyb2xlPXB1Ymxpc2hlciZleHBpcmVfdGltZT0xNTU0NjA3NDY5JmluaXRpYWxfbGF5b3V0X2NsYXNzX2xpc3Q9'>
                     <OTStreams>
                         <div onClick = {this.handleVidContainerClick} className = 'vidContainer'>
                             <ChevronLeft  className = 'leftPan'/>
