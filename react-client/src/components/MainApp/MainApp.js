@@ -13,7 +13,8 @@ class MainApp extends Component{
 
         this.state = {
             cameras: [],
-            detectionImgs: []
+            detectionImgs: [],
+            isFocused: false
         }
 
         this.subscriberEventHandlers = {
@@ -39,7 +40,9 @@ class MainApp extends Component{
                  * Just for UI expanding a video.
                  */
                 event.target.element.addEventListener('dblclick', e => {
-                    console.log(e.currentTarget.id)
+                    this.setState({
+                        isFocused: !this.state.isFocused
+                    })
                     e.currentTarget.classList.toggle('focused')
                     this.setState({
                         focusedCamera: event.target.stream.id
@@ -61,7 +64,7 @@ class MainApp extends Component{
         /**
          * decrement Viewer count on close.
          */
-        window.addEventListener('beforeunload', (e) => {  
+        window.addEventListener('unload', (e) => {  
             e.preventDefault();
             this.updateViewerNum(-1)
             e.returnValue = '';
@@ -139,6 +142,9 @@ class MainApp extends Component{
 
         return(
             <div className = 'MainApp'>
+
+                {this.state.isFocused && <div id = 'onFocus'/>}
+
                 {this.props.location.pathname === '/' && <OTSession apiKey = '46283042' sessionId = '1_MX40NjI4MzA0Mn5-MTU1MjAxOTA0Nzc3Nn4xN0EzN0ZueXd5S0UvS3J4OUNqTWRkOWx-fg' token = 'T1==cGFydG5lcl9pZD00NjI4MzA0MiZzaWc9MTBiMzdkMjdiODlhYzE2ZWMxNTgxZTQzNTBhNmZkN2QxMDMyYTkxNTpzZXNzaW9uX2lkPTFfTVg0ME5qSTRNekEwTW41LU1UVTFNakF4T1RBME56YzNObjR4TjBFek4wWnVlWGQ1UzBVdlMzSjRPVU5xVFdSa09XeC1mZyZjcmVhdGVfdGltZT0xNTUyMDE5MDcwJm5vbmNlPTAuODY0MTY0NDE0NTQzMTU5NyZyb2xlPXB1Ymxpc2hlciZleHBpcmVfdGltZT0xNTU0NjA3NDY5JmluaXRpYWxfbGF5b3V0X2NsYXNzX2xpc3Q9'>
                     <OTStreams>
                         <div onClick = {this.handleVidContainerClick} className = 'vidContainer'>
