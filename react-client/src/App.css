@@ -112,7 +112,8 @@ form div .button:hover {
   background: rgba(255, 255, 255, 0.5);
 }
 .detectionImage {
-  max-width: 28.57142857%;
+  display: block !important;
+  width: 28.57142857%;
   margin: 15px;
 }
 .detectionGallery .imagesContainer {
