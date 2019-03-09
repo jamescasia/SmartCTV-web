@@ -34,9 +34,13 @@
   width: 100px;
   min-width: 100px;
   max-height: 100vh;
+  margin-left: 5px;
   display: flex;
   flex-direction: column;
   align-items: center;
+  position: fixed;
+  top: 0;
+  right: 0;
 }
 .MainApp .sideBar div {
   padding: 0;
@@ -126,8 +130,14 @@ form div .button:hover {
 }
 .detectionImage {
   display: block !important;
-  width: 28.57142857%;
+  min-width: 28.57142857%;
   margin: 15px;
+}
+.detectionImage img {
+  width: 100%;
+}
+.detectionGallery {
+  padding-right: 100px;
 }
 .detectionGallery .imagesContainer {
   display: flex;

@@ -24,9 +24,9 @@ class MainApp extends Component{
                 
             },
             connected: event => {
-                console.log(event.target.isSubscribing())
                 event.target.element.parentElement.parentElement.firstChild.addEventListener('click', () => {
                     this.handleLeftClick(event.target.stream.name)
+                    
                 })
                 event.target.element.parentElement.parentElement.lastChild.addEventListener('click', () => {
                     this.handleRightClick(event.target.stream.name)
@@ -51,7 +51,7 @@ class MainApp extends Component{
                 this.setState({
                     cameras: [...this.state.cameras, {id: event.target.stream.name, isScanning: false} ]
                 })
-                
+                            
             },
             
             
