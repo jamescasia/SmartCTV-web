@@ -1,9 +1,11 @@
 import React, {Component} from 'react'
 import {OTSession,OTStreams, OTSubscriber, preloadScript} from 'opentok-react'
 import {ChevronLeft, ChevronRight, ToggleLeft, ToggleRight} from 'react-feather'
+import {NavLink, withRouter, Route} from 'react-router-dom'
 import { EventEmitter } from 'events';
 import firebase from 'firebase'
 import Image from '../Image/Image'
+import DetectionsGallery from '../DetectionsGallery/DetectionsGallery';
 
 class MainApp extends Component{
     constructor(props){
@@ -60,14 +62,13 @@ class MainApp extends Component{
          * decrement Viewer count on close.
          */
         window.addEventListener('beforeunload', (e) => {  
-        e.preventDefault();
-        this.updateViewerNum(-1)
-            return e.returnValue = 'Are you sure you want to close?';
+            e.preventDefault();
+            this.updateViewerNum(-1)
+            e.returnValue = '';
         });
 
         this.props.database.ref().child(`users/userID/Images`).on('value', snap => {
             if(!snap.val()) return
-            console.log(snap.val())
             let data = snap.val()
             this.setState({
                 detectionImgs: Object.keys(snap.val()).map(imgId => {
@@ -138,7 +139,7 @@ class MainApp extends Component{
 
         return(
             <div className = 'MainApp'>
-                <OTSession apiKey = '46283042' sessionId = '1_MX40NjI4MzA0Mn5-MTU1MjAxOTA0Nzc3Nn4xN0EzN0ZueXd5S0UvS3J4OUNqTWRkOWx-fg' token = 'T1==cGFydG5lcl9pZD00NjI4MzA0MiZzaWc9MTBiMzdkMjdiODlhYzE2ZWMxNTgxZTQzNTBhNmZkN2QxMDMyYTkxNTpzZXNzaW9uX2lkPTFfTVg0ME5qSTRNekEwTW41LU1UVTFNakF4T1RBME56YzNObjR4TjBFek4wWnVlWGQ1UzBVdlMzSjRPVU5xVFdSa09XeC1mZyZjcmVhdGVfdGltZT0xNTUyMDE5MDcwJm5vbmNlPTAuODY0MTY0NDE0NTQzMTU5NyZyb2xlPXB1Ymxpc2hlciZleHBpcmVfdGltZT0xNTU0NjA3NDY5JmluaXRpYWxfbGF5b3V0X2NsYXNzX2xpc3Q9'>
+                {this.props.location.pathname === '/' && <OTSession apiKey = '46283042' sessionId = '1_MX40NjI4MzA0Mn5-MTU1MjAxOTA0Nzc3Nn4xN0EzN0ZueXd5S0UvS3J4OUNqTWRkOWx-fg' token = 'T1==cGFydG5lcl9pZD00NjI4MzA0MiZzaWc9MTBiMzdkMjdiODlhYzE2ZWMxNTgxZTQzNTBhNmZkN2QxMDMyYTkxNTpzZXNzaW9uX2lkPTFfTVg0ME5qSTRNekEwTW41LU1UVTFNakF4T1RBME56YzNObjR4TjBFek4wWnVlWGQ1UzBVdlMzSjRPVU5xVFdSa09XeC1mZyZjcmVhdGVfdGltZT0xNTUyMDE5MDcwJm5vbmNlPTAuODY0MTY0NDE0NTQzMTU5NyZyb2xlPXB1Ymxpc2hlciZleHBpcmVfdGltZT0xNTU0NjA3NDY5JmluaXRpYWxfbGF5b3V0X2NsYXNzX2xpc3Q9'>
                     <OTStreams>
                         <div onClick = {this.handleVidContainerClick} className = 'vidContainer'>
                             <ChevronLeft  className = 'leftPan'/>
@@ -147,20 +148,20 @@ class MainApp extends Component{
                             <ChevronRight  className = 'rightPan'/>
                         </div>
                     </OTStreams>
-                </OTSession>
+                </OTSession>}
+
+                <Route path = '/detections' render = { (props) => <DetectionsGallery {...props} images = {this.state.detectionImgs}/>} />
+
                 <div className = 'sideBar'>
                     <button onClick = {this.handleSignOut} className = 'signOutButton'>signOut</button>
-                    <div className = 'detectionImagesContainer'>
-                        <h1>People seen while you weren't looking.</h1>
-                        {this.state.detectionImgs !== [] && this.state.detectionImgs.map(img => {
-                            console.log(img.timeTaken)
-                            return <Image src = {img.imgLink} timeStamp = {img.timeTaken} camera ={img.taker}/>
-                        })}
-                    </div>
+                    {/* <div className = 'detectionImagesContainer'> */}
+                        <NavLink exact activeClassName = 'activeNavLink' to = '/'>Cameras</NavLink>
+                        <NavLink exact activeClassName = 'activeNavLink' to = '/detections'>Detections</NavLink>
+                    {/* </div> */}
                 </div>
             </div>
         )
     }
 }
 
-export default preloadScript(MainApp)
+export default withRouter(preloadScript(MainApp))

@@ -9,21 +9,7 @@
         flex-grow: 1;
     }
     
-    .sideBar{
-        width: 300px;
-        height: 100vh;
-        overflow-y: scroll;
-        .signOutButton{
-            .buttonBase();
-            // position: absolute;
-            // top: 10px;
-            // right: 10px;
-        }
-        
-        .detectionImagesContainer{
-            height: 100%;
-        }
-    }
+    
     
     div{
         padding-bottom: 15px;
@@ -32,6 +18,29 @@
             justify-content: flex-start;
             flex-wrap: wrap;
             flex-grow: 0;
+        }
+    }
+
+    .sideBar{
+        width: 100px;
+        min-width: 100px;
+        max-height: 100vh;
+        
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        div{
+            padding: 0;
+        }
+        .signOutButton{
+            .buttonBase();
+            // position: absolute;
+            // top: 10px;
+            // right: 10px;
+        }
+
+        .activeNavLink {
+            color: black;
         }
     }
 }
