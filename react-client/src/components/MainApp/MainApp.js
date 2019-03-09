@@ -3,6 +3,7 @@ import {OTSession,OTStreams, OTSubscriber, preloadScript} from 'opentok-react'
 import {ChevronLeft, ChevronRight, ToggleLeft, ToggleRight} from 'react-feather'
 import { EventEmitter } from 'events';
 import firebase from 'firebase'
+import Image from '../Image/Image'
 
 class MainApp extends Component{
     constructor(props){
@@ -10,6 +11,7 @@ class MainApp extends Component{
 
         this.state = {
             cameras: [],
+            detectionImgs: []
         }
 
         this.subscriberEventHandlers = {
@@ -52,7 +54,45 @@ class MainApp extends Component{
     }
 
     componentDidMount(){
-        // let vidContainers = document.querySelectorAll('.vidContainer')
+        this.updateViewerNum(1)
+        
+        /**
+         * decrement Viewer count on close.
+         */
+        window.addEventListener('beforeunload', (e) => {  
+        e.preventDefault();
+        this.updateViewerNum(-1)
+            return e.returnValue = 'Are you sure you want to close?';
+        });
+
+        this.props.database.ref().child(`users/userID/Images`).on('value', snap => {
+            if(!snap.val()) return
+            console.log(snap.val())
+            let data = snap.val()
+            this.setState({
+                detectionImgs: Object.keys(snap.val()).map(imgId => {
+                let imgData = data[imgId]
+                    return { 
+                        id: imgId,
+                        imgLink: imgData.storageLink,
+                        taker: imgData.taker,
+                        timeTaken: imgData.timeTaken
+                    }
+                })
+            })
+        })
+    }
+
+    componentWillUnmount(){
+        window.removeEventListener('beforeunload')
+    }
+
+    updateViewerNum = (updateBy) => {
+        this.props.database.ref().child('users/userID/viewers').once('value').then(snap => {
+        this.props.database.ref().child('users/userID/').update({
+            viewers: snap.val() + updateBy,
+        })
+        })
     }
 
     handleLeftClick = cameraName => {
@@ -110,9 +150,13 @@ class MainApp extends Component{
                 </OTSession>
                 <div className = 'sideBar'>
                     <button onClick = {this.handleSignOut} className = 'signOutButton'>signOut</button>
-                    <ul>
-                        <li>Maybe Some stats Here.</li>
-                    </ul>
+                    <div className = 'detectionImagesContainer'>
+                        <h1>People seen while you weren't looking.</h1>
+                        {this.state.detectionImgs !== [] && this.state.detectionImgs.map(img => {
+                            console.log(img.timeTaken)
+                            return <Image src = {img.imgLink} timeStamp = {img.timeTaken} camera ={img.taker}/>
+                        })}
+                    </div>
                 </div>
             </div>
         )
