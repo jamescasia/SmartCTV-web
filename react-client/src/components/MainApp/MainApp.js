@@ -88,7 +88,11 @@ class MainApp extends Component{
     }
 
     componentWillUnmount(){
-        window.removeEventListener('beforeunload')
+        window.removeEventListener('unload', (e) => {  
+            e.preventDefault();
+            this.updateViewerNum(-1)
+            e.returnValue = '';
+        })
     }
 
     updateViewerNum = (updateBy) => {
