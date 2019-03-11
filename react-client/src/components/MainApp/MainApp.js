@@ -74,7 +74,8 @@ class MainApp extends Component{
             if(!snap.val()) return
             let data = snap.val()
             this.setState({
-                detectionImgs: Object.keys(snap.val()).map(imgId => {
+
+                detectionImgs: Object.keys(snap.val()).reverse().map(imgId => {
                 let imgData = data[imgId]
                     return { 
                         id: imgId,
