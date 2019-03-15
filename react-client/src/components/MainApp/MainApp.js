@@ -6,6 +6,8 @@ import { EventEmitter } from 'events';
 import firebase from 'firebase'
 import Image from '../Image/Image'
 import DetectionsGallery from '../DetectionsGallery/DetectionsGallery';
+import VideoDetections from '../VideoDetections/VideoDetections';
+
 
 class MainApp extends Component{
     constructor(props){
@@ -14,7 +16,8 @@ class MainApp extends Component{
         this.state = {
             cameras: [],
             detectionImgs: [],
-            isFocused: false
+            isFocused: false,
+            detectionVids:[],
         }
 
         this.subscriberEventHandlers = {
@@ -25,12 +28,13 @@ class MainApp extends Component{
             },
             connected: event => {
                 // console.log('connected', event.target.element)  
-                event.target.element.parentElement.style.width = '85%';
-                event.target.element.style.height = '100%';
-                event.target.element.parentElement.style.height = '100%';
-                event.target.element.parentElement.parentElement.parentElement.className = 'vid'
+                // ----DESTROY GRID
+                // event.target.element.parentElement.style.width = '85%';
+                // event.target.element.style.height = '100%';
+                // event.target.element.parentElement.style.height = '100%';
+                // event.target.element.parentElement.parentElement.parentElement.className = 'vid'
 
-                event.target.element.parentElement.parentElement.parentElement.parentElement.style.height = '100%';
+                // event.target.element.parentElement.parentElement.parentElement.parentElement.style.height = '100%';
   
                 event.target.element.parentElement.parentElement.firstChild.addEventListener('click', () => {
                     this.handleLeftClick(event.target.stream.name)
@@ -94,7 +98,26 @@ class MainApp extends Component{
                 })
             })
         })
+
+        this.props.database.ref().child(`users/userID/Videos`).on('value', snap => {
+            if(!snap.val()) return
+            let data = snap.val()
+            this.setState({
+
+                detectionVids: Object.keys(snap.val()).reverse().map(vidId => {
+                let vidData = data[vidId]
+                    return { 
+                        id: vidId,
+                        vidLink: vidData.storageLink,
+                        taker: vidData.taker,
+                        timeTaken: vidData.timeTaken
+                    }
+                })
+            })
+        })
     }
+
+    
 
     componentWillUnmount(){
         window.removeEventListener('unload', (e) => {  
@@ -159,7 +182,7 @@ class MainApp extends Component{
 
                 {this.state.isFocused && <div id = 'onFocus'/>}
 
-                {this.props.location.pathname === '/' && <OTSession apiKey = '46283042' sessionId = '1_MX40NjI4MzA0Mn5-MTU1MjAxOTA0Nzc3Nn4xN0EzN0ZueXd5S0UvS3J4OUNqTWRkOWx-fg' token = 'T1==cGFydG5lcl9pZD00NjI4MzA0MiZzaWc9MTBiMzdkMjdiODlhYzE2ZWMxNTgxZTQzNTBhNmZkN2QxMDMyYTkxNTpzZXNzaW9uX2lkPTFfTVg0ME5qSTRNekEwTW41LU1UVTFNakF4T1RBME56YzNObjR4TjBFek4wWnVlWGQ1UzBVdlMzSjRPVU5xVFdSa09XeC1mZyZjcmVhdGVfdGltZT0xNTUyMDE5MDcwJm5vbmNlPTAuODY0MTY0NDE0NTQzMTU5NyZyb2xlPXB1Ymxpc2hlciZleHBpcmVfdGltZT0xNTU0NjA3NDY5JmluaXRpYWxfbGF5b3V0X2NsYXNzX2xpc3Q9'>
+                {this.props.location.pathname === '/' && <OTSession apiKey = '46288002' sessionId = '1_MX40NjI4ODAwMn5-MTU1MjY5MTMzMTU0MH5TUnBPcTJhTURtZ0hYTXdZcVZjSHBpSGR-fg' token = 'T1==cGFydG5lcl9pZD00NjI4ODAwMiZzaWc9OGFjMmZlYTdmMGM3ZjU1ZTM2MGUwOTAzYTBmZDZlYTRlYTFlNGZkZDpzZXNzaW9uX2lkPTFfTVg0ME5qSTRPREF3TW41LU1UVTFNalk1TVRNek1UVTBNSDVUVW5CUGNUSmhUVVJ0WjBoWVRYZFpjVlpqU0hCcFNHUi1mZyZjcmVhdGVfdGltZT0xNTUyNjkxMzUxJm5vbmNlPTAuMDQ4NzY4NjMwODI2MTYzODk1JnJvbGU9cHVibGlzaGVyJmV4cGlyZV90aW1lPTE1NTUyODMzNDkmaW5pdGlhbF9sYXlvdXRfY2xhc3NfbGlzdD0='>
                     <OTStreams>
                         <div onClick = {this.handleVidContainerClick} className = 'vidContainer'>
                                 <ChevronLeft  className = 'leftPan'/>
@@ -172,12 +195,13 @@ class MainApp extends Component{
 
                 <Route path = '/detections' render = { (props) => <DetectionsGallery {...props} images = {this.state.detectionImgs}/>} />
 
+                <Route path = '/detections-video' render = { (props) => <VideoDetections {...props} videos = {this.state.detectionVids}/>} />
                 <div className = 'sideBar'>
                     <button onClick = {this.handleSignOut} className = 'signOutButton'>signOut</button>
                     {/* <div className = 'detectionImagesContainer'> */}
                         <NavLink exact activeClassName = 'activeNavLink' to = '/'>Cameras</NavLink>
                         <NavLink exact activeClassName = 'activeNavLink' to = '/detections'>Image Log</NavLink> 
-                        <NavLink exact activeClassName = 'activeNavLink' to = '/detectionsVideo'>Video Log</NavLink>
+                        <NavLink exact activeClassName = 'activeNavLink' to = '/detections-video'>Video Log</NavLink>
                     {/* </div> */}
                 </div>
             </div>
