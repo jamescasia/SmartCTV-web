@@ -24,6 +24,11 @@ class MainApp extends Component{
                 
             },
             connected: event => {
+                // console.log('connected', event.target.element)  
+                // event.target.element.style.width = 500;
+                // event.target.element.style.height = 400;
+
+  
                 event.target.element.parentElement.parentElement.firstChild.addEventListener('click', () => {
                     this.handleLeftClick(event.target.stream.name)
                     
@@ -122,6 +127,7 @@ class MainApp extends Component{
 
     handleSignOut = () => {
         firebase.auth().signOut()
+        this.updateViewerNum(-1);
     }
 
     handleToggleClick = cameraId => {
@@ -153,10 +159,10 @@ class MainApp extends Component{
                 {this.props.location.pathname === '/' && <OTSession apiKey = '46283042' sessionId = '1_MX40NjI4MzA0Mn5-MTU1MjAxOTA0Nzc3Nn4xN0EzN0ZueXd5S0UvS3J4OUNqTWRkOWx-fg' token = 'T1==cGFydG5lcl9pZD00NjI4MzA0MiZzaWc9MTBiMzdkMjdiODlhYzE2ZWMxNTgxZTQzNTBhNmZkN2QxMDMyYTkxNTpzZXNzaW9uX2lkPTFfTVg0ME5qSTRNekEwTW41LU1UVTFNakF4T1RBME56YzNObjR4TjBFek4wWnVlWGQ1UzBVdlMzSjRPVU5xVFdSa09XeC1mZyZjcmVhdGVfdGltZT0xNTUyMDE5MDcwJm5vbmNlPTAuODY0MTY0NDE0NTQzMTU5NyZyb2xlPXB1Ymxpc2hlciZleHBpcmVfdGltZT0xNTU0NjA3NDY5JmluaXRpYWxfbGF5b3V0X2NsYXNzX2xpc3Q9'>
                     <OTStreams>
                         <div onClick = {this.handleVidContainerClick} className = 'vidContainer'>
-                            <ChevronLeft  className = 'leftPan'/>
+                                <ChevronLeft  className = 'leftPan'/>
                                 <OTSubscriber eventHandlers = {this.subscriberEventHandlers}/>
                                 <div className = 'scanToggle'>toggle</div>
-                            <ChevronRight  className = 'rightPan'/>
+                                <ChevronRight  className = 'rightPan'/>
                         </div>
                     </OTStreams>
                 </OTSession>}
@@ -167,7 +173,8 @@ class MainApp extends Component{
                     <button onClick = {this.handleSignOut} className = 'signOutButton'>signOut</button>
                     {/* <div className = 'detectionImagesContainer'> */}
                         <NavLink exact activeClassName = 'activeNavLink' to = '/'>Cameras</NavLink>
-                        <NavLink exact activeClassName = 'activeNavLink' to = '/detections'>Detections</NavLink>
+                        <NavLink exact activeClassName = 'activeNavLink' to = '/detections'>Image Log</NavLink> 
+                        <NavLink exact activeClassName = 'activeNavLink' to = '/detectionsVideo'>Video Log</NavLink>
                     {/* </div> */}
                 </div>
             </div>

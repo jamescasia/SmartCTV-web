@@ -18,13 +18,21 @@ export default class AuthPage extends Component{
     }
 
     logIn = () => {
+
         firebase.auth().signInWithEmailAndPassword(this.state.email, this.state.password).catch(err => {
             alert(err.message)
         })
     }
+
+    isMobileDevice() {
+        return (typeof window.orientation !== "undefined") || (navigator.userAgent.indexOf('IEMobile') !== -1);
+    };
     
 
     render(){
+        if( this.isMobileDevice()){
+            return(<div></div> );
+        }
         return(
             <>
                 <form onSubmit = {e=>e.preventDefault()}>
