@@ -194,13 +194,13 @@ class MainApp extends Component{
 
                 <Route path = '/detections' render = { (props) => <DetectionsGallery {...props} images = {this.state.detectionImgs}/>} />
 
-                <Route path = '/detectionsVideo' render = { (props) => <VideoDetections {...props} videos = {this.state.detectionVids}/>} />
+                <Route path = '/detections-video' render = { (props) => <VideoDetections {...props} videos = {this.state.detectionVids}/>} />
                 <div className = 'sideBar'>
                     <button onClick = {this.handleSignOut} className = 'signOutButton'>signOut</button>
                     {/* <div className = 'detectionImagesContainer'> */}
                         <NavLink exact activeClassName = 'activeNavLink' to = '/'>Cameras</NavLink>
                         <NavLink exact activeClassName = 'activeNavLink' to = '/detections'>Image Log</NavLink> 
-                        <NavLink exact activeClassName = 'activeNavLink' to = '/detectionsVideo'>Video Log</NavLink>
+                        <NavLink exact activeClassName = 'activeNavLink' to = '/detections-video'>Video Log</NavLink>
                     {/* </div> */}
                 </div>
             </div>

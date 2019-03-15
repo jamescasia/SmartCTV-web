@@ -3,7 +3,7 @@ import React from 'react'
 export default (props) => {
     return(
         <div className = 'detectionVideo'> 
-            <video controls width="250">  
+            <video controls>  
                 <source src={props.src} alt="Detected Person" type="video/mp4"/> 
                 Sorry, your browser doesn't support embedded videos.
             </video>
