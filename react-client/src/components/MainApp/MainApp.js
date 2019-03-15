@@ -25,9 +25,12 @@ class MainApp extends Component{
             },
             connected: event => {
                 // console.log('connected', event.target.element)  
-                // event.target.element.style.width = 500;
-                // event.target.element.style.height = 400;
+                event.target.element.parentElement.style.width = '85%';
+                event.target.element.style.height = '100%';
+                event.target.element.parentElement.style.height = '100%';
+                event.target.element.parentElement.parentElement.parentElement.className = 'vid'
 
+                event.target.element.parentElement.parentElement.parentElement.parentElement.style.height = '100%';
   
                 event.target.element.parentElement.parentElement.firstChild.addEventListener('click', () => {
                     this.handleLeftClick(event.target.stream.name)

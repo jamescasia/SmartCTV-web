@@ -71,11 +71,21 @@
   background-color: black;
   z-index: 5;
 }
+.vid {
+  width: 100%;
+  height: 100%;
+}
 .vidContainer {
+  height: 100%;
+  width: 100%;
   display: flex;
   align-items: center;
   margin: 10px 0;
+  flex-wrap: nowrap !important;
   position: relative;
+}
+.vidContainer .OTSubscriberContainer {
+  width: 100% !important;
 }
 .vidContainer svg:hover {
   cursor: pointer;
@@ -90,6 +100,9 @@
 .vidContainer .scanToggle:hover {
   background-color: bisque;
   cursor: pointer;
+}
+.vidContainer video {
+  object-fit: scale-down !important;
 }
 .vidContainer .focused {
   position: fixed;
