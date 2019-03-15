@@ -6,6 +6,8 @@ import { EventEmitter } from 'events';
 import firebase from 'firebase'
 import Image from '../Image/Image'
 import DetectionsGallery from '../DetectionsGallery/DetectionsGallery';
+import VideoDetections from '../VideoDetections/VideoDetections';
+
 
 class MainApp extends Component{
     constructor(props){
@@ -14,7 +16,8 @@ class MainApp extends Component{
         this.state = {
             cameras: [],
             detectionImgs: [],
-            isFocused: false
+            isFocused: false,
+            detectionVids:[],
         }
 
         this.subscriberEventHandlers = {
@@ -94,7 +97,26 @@ class MainApp extends Component{
                 })
             })
         })
+
+        this.props.database.ref().child(`users/userID/Videos`).on('value', snap => {
+            if(!snap.val()) return
+            let data = snap.val()
+            this.setState({
+
+                detectionVids: Object.keys(snap.val()).reverse().map(vidId => {
+                let vidData = data[vidId]
+                    return { 
+                        id: vidId,
+                        vidLink: vidData.storageLink,
+                        taker: vidData.taker,
+                        timeTaken: vidData.timeTaken
+                    }
+                })
+            })
+        })
     }
+
+    
 
     componentWillUnmount(){
         window.removeEventListener('unload', (e) => {  
@@ -172,6 +194,7 @@ class MainApp extends Component{
 
                 <Route path = '/detections' render = { (props) => <DetectionsGallery {...props} images = {this.state.detectionImgs}/>} />
 
+                <Route path = '/detectionsVideo' render = { (props) => <VideoDetections {...props} videos = {this.state.detectionVids}/>} />
                 <div className = 'sideBar'>
                     <button onClick = {this.handleSignOut} className = 'signOutButton'>signOut</button>
                     {/* <div className = 'detectionImagesContainer'> */}
