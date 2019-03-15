@@ -1,8 +1,12 @@
 .detectionVideo{
     display: block !important;
-    min-width: (100% / 3.5);
+    max-width: (100% / 3.5);
+    // max-width: min-content;
     margin: 15px; 
-    vid{
+    video{
         width: 100%;
+    }
+    @media (max-width: 500px) {
+        min-width: 100%;
     }
 }
