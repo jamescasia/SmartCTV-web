@@ -21,10 +21,9 @@ export default class AuthPage extends Component{
         if(window.location.href.includes("account_linking_token") ){
             let hrefs = window.location.href.split("redirect_uri=");
             let res = hrefs[hrefs.length -1];
-            console.log(decodeURI(res));
-
-
-            window.location.replace( decodeURI( res));
+            console.log(decodeURIComponent(res));
+ 
+            window.location.replace( decodeURIComponent( res));
 
              
         }
