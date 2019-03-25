@@ -26,7 +26,7 @@ export default class AuthPage extends Component {
             let hrefs = window.location.href.split("redirect_uri=");
             let res = hrefs[hrefs.length - 1];
             console.log(decodeURIComponent(res)); 
-            window.location.replace(decodeURIComponent(res));
+            window.location.replace(decodeURIComponent(res)+"&authorization_code=SUCCESS_LOGIN");
           } 
       })
       .catch(err => {
