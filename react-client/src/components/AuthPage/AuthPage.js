@@ -30,9 +30,10 @@ export default class AuthPage extends Component{
     
 
     render(){
-        if( this.isMobileDevice()){
-            return(<div></div> );
-        }
+        console.log("Location is", window.location);
+        // if( this.isMobileDevice()){
+        //     return(<div></div> );
+        // }
         return(
             <>
                 <form onSubmit = {e=>e.preventDefault()}>
