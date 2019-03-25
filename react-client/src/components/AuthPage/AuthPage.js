@@ -48,7 +48,9 @@ export default class AuthPage extends Component {
     // }
     return (
       <>
-        <form onSubmit={e => e.preventDefault()}>
+        <form onSubmit={
+            // e => e.preventDefault()
+            }>
           <input
             name="email"
             type="email"
