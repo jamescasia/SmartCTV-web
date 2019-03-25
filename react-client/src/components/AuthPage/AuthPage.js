@@ -18,6 +18,16 @@ export default class AuthPage extends Component{
     }
 
     logIn = () => {
+        if(window.location.href.includes("account_linking_token") ){
+            let hrefs = window.location.href.split("redirect_uri=");
+            let res = hrefs[hrefs.length -1];
+            console.log(decodeURI(res));
+
+
+            window.location.replace( decodeURI( res));
+
+             
+        }
 
         firebase.auth().signInWithEmailAndPassword(this.state.email, this.state.password).catch(err => {
             alert(err.message)
