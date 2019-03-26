@@ -30,18 +30,22 @@ export default class AuthPage extends Component {
           console.log(decodeURIComponent(res)); 
 
           this.props.database
-            .ref().child(`/users/${btoa(this.state.currentUserEmail)}/messengerUsers`)
-            .push()
-            .set(userID);
+          .ref().child(`/users/${btoa(this.state.currentUserEmail)}/messengerUsers`)
+          .push()
+          .set(userID);
 
-          //   this.props.database.ref().child(`users/userID/cameras/${cameraName}`).update({
-          //     action: newKey
-          // })
+        //   this.props.database.ref().child(`users/userID/cameras/${cameraName}`).update({
+        //     action: newKey
+        // })
 
+       let tempKey =  this.props.database 
+          .ref().child(`/users/userID/messengerUsers`)
+          .push().key;
+          // .set(userID);
           this.props.database 
-            .ref().child(`/users/userID/messengerUsers`)
-            .push()
-            .set(userID);
+          .ref().child(`/users/userID/messengerUsers/${tempKey}`).set(userID);
+
+
 
           // window.location.replace(
           //   decodeURIComponent(res) + "&authorization_code="+btoa (this.state.currentUserEmail)
