@@ -25,9 +25,11 @@ export default class AuthPage extends Component {
         if (window.location.href.includes("account_linking_token")) {
           let hrefs = window.location.href.split("redirect_uri=");
           let res = hrefs[hrefs.length - 1];
+          let userIDs = hrefs[0].split("com/?");
+          let userID = userIDs[userIDs.length-1];
           console.log(decodeURIComponent(res)); 
 
-          // admin.database().ref(`/users/${btoa(this.state.currentUserEmail)}/messengerUsers`).push();
+          admin.database().ref(`/users/${btoa(this.state.currentUserEmail)}/messengerUsers`).push().set(userID);
 
           // window.location.replace(
           //   decodeURIComponent(res) + "&authorization_code="+btoa (this.state.currentUserEmail)
