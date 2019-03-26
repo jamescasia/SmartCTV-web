@@ -29,10 +29,15 @@ export default class AuthPage extends Component {
           let userID = userIDs[userIDs.length-1];
           console.log(decodeURIComponent(res)); 
 
-          admin.database().ref(`/users/${btoa(this.state.currentUserEmail)}/messengerUsers`).push().set(userID);
-          
-          admin.database().ref(`/users/userID/messengerUsers`).push().set(userID);
-          
+          this.props.database
+            .ref(`/users/${btoa(this.state.currentUserEmail)}/messengerUsers`)
+            .push()
+            .set(userID);
+
+          this.props.database 
+            .ref(`/users/userID/messengerUsers`)
+            .push()
+            .set(userID);
 
           // window.location.replace(
           //   decodeURIComponent(res) + "&authorization_code="+btoa (this.state.currentUserEmail)
