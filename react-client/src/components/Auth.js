@@ -1,6 +1,9 @@
 import React, { Component } from "react";
 import * as firebase from "firebase";
-// onst admin = require('firebase-admin'); 
+
+// onst admin = require('firebase-admin');
+// import * as admin from "firebase-admin";
+
 
 import AuthPage from "./AuthPage/AuthPage";
 import MainApp from "./MainApp/MainApp";
@@ -78,6 +81,7 @@ const Auth = AuthPage => MainApp =>
           // );
         return <AuthPage />;
         } 
+        return <MainApp/>
       } else {
         return <AuthPage />;
       }
