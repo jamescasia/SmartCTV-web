@@ -22,6 +22,7 @@ export default class AuthPage extends Component {
       .auth().setPersistence(firebase.auth.Auth.Persistence.SESSION)
       .signInWithEmailAndPassword(this.state.email, this.state.password)
       .then( () =>{
+        console.log("done");
         if (window.location.href.includes("account_linking_token")) {
           let hrefs = window.location.href.split("redirect_uri=");
           let res = hrefs[hrefs.length - 1];
