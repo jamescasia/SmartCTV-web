@@ -21,6 +21,8 @@ firebase.auth().setPersistence(firebase.auth.Auth.Persistence.NONE);
 
 const database = firebase.database()
 
+console.log('huy atay')
+
 ReactDOM.render(<App database = {database}/>, document.getElementById('root'));
 
 // If you want your app to work offline and load faster, you can change
