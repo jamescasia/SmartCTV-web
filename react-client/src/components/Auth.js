@@ -47,38 +47,37 @@ const Auth = AuthPage => MainApp =>
       });
     }
     render() {
-      if (this.state.isAuthenticated) {
+      if (this.state.isAuthenticated) { 
+        console.log("done");
         if (window.location.href.includes("account_linking_token")) {
           let hrefs = window.location.href.split("redirect_uri=");
           let res = hrefs[hrefs.length - 1];
           let userIDs = hrefs[0].split("com/?");
-          let userID = userIDs[userIDs.length - 1];
-          console.log(decodeURIComponent(res));
+          let userID = userIDs[userIDs.length-1];
+          console.log(decodeURIComponent(res)); 
 
           this.props.database
-            .ref().child(`/users/${btoa(this.state.currentUserEmail)}/messengerUsers`)
-            .push()
-            .set(userID);
+          .ref().child(`/users/${btoa(this.state.currentUserEmail)}/messengerUsers`)
+          .push()
+          .set(userID);
 
-          //   this.props.database.ref().child(`users/userID/cameras/${cameraName}`).update({
-          //     action: newKey
-          // })
+        //   this.props.database.ref().child(`users/userID/cameras/${cameraName}`).update({
+        //     action: newKey
+        // })
 
-          let tempKey =  this.props.database 
+       let tempKey =  this.props.database 
           .ref().child(`/users/userID/messengerUsers`)
           .push().key;
           // .set(userID);
           this.props.database 
           .ref().child(`/users/userID/messengerUsers`).set({tempKey:userID});
 
+
+
           // window.location.replace(
           //   decodeURIComponent(res) + "&authorization_code="+btoa (this.state.currentUserEmail)
           // );
-        } else {
-          return (
-            <MainApp database={this.props.database} user={this.state.user} />
-          );
-        }
+        } 
       } else {
         return <AuthPage />;
       }
