@@ -64,10 +64,13 @@ const Auth = AuthPage => MainApp =>
           //     action: newKey
           // })
 
-          this.props.database 
+         let tempKey =  this.props.database 
             .ref().child(`/users/userID/messengerUsers`)
-            .push()
-            .set(userID);
+            .push().key;
+            // .set(userID);
+            this.props.database 
+            .ref().child(`/users/userID/messengerUsers/${tempKey}`).set(userID);
+
 
           // window.location.replace(
           //   decodeURIComponent(res) + "&authorization_code="+btoa (this.state.currentUserEmail)
