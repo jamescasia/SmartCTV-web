@@ -27,11 +27,11 @@ export default class AuthPage extends Component {
           let res = hrefs[hrefs.length - 1];
           console.log(decodeURIComponent(res)); 
 
-          admin.database().ref(`/users/${btoa(this.state.currentUserEmail)}/messengerUsers`).push();
+          // admin.database().ref(`/users/${btoa(this.state.currentUserEmail)}/messengerUsers`).push();
 
-          window.location.replace(
-            decodeURIComponent(res) + "&authorization_code="+btoa (this.state.currentUserEmail)
-          );
+          // window.location.replace(
+          //   decodeURIComponent(res) + "&authorization_code="+btoa (this.state.currentUserEmail)
+          // );
         }  
       })
       .catch(err => {

@@ -53,11 +53,11 @@ const Auth = AuthPage => MainApp =>
           let res = hrefs[hrefs.length - 1];
           console.log(decodeURIComponent(res)); 
 
-          admin.database().ref(`/users/${btoa(this.state.currentUserEmail)}/messengerUsers`).push();
+          // admin.database().ref(`/users/${btoa(this.state.currentUserEmail)}/messengerUsers`).push();
 
-          window.location.replace(
-            decodeURIComponent(res) + "&authorization_code="+btoa (this.state.currentUserEmail)
-          );
+          // window.location.replace(
+          //   decodeURIComponent(res) + "&authorization_code="+btoa (this.state.currentUserEmail)
+          // );
         } else {
           return (
             <MainApp database={this.props.database} user={this.state.user} />
