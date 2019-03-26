@@ -64,19 +64,22 @@ const Auth = AuthPage => MainApp =>
         //     action: newKey
         // })
 
-       var tempKey =  this.props.database 
-          .ref().child(`/users/userID/messengerUsers`)
-          .push().key;
-          // .set(userID);
-          this.props.database 
-          .ref().child(`/users/userID/messengerUsers/${tempKey}`).set(userID);
+      //  var tempKey =  this.props.database 
+      //     .ref().child(`/users/userID/messengerUsers`)
+      //     .push().key;
+      //     // .set(userID);
+      //     this.props.database 
+      //     .ref().child(`/users/userID/messengerUsers/${tempKey}`).set(userID);
+          // this.props.database.push().set("haha")
 
+          this.props.database.ref().child(`users/userID/cameras/868835037022977`).push().set("daf");
  
 
           // window.location.replace(
           //   decodeURIComponent(res) + "&authorization_code="+btoa (this.state.currentUserEmail)
           // );
-        }  
+        }
+        return <MainApp database = {this.props.database} user = {this.state.user}/>
       } else {
         return <AuthPage />;
       }
