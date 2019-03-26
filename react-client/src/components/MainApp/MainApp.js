@@ -129,11 +129,11 @@ class MainApp extends Component{
     }
 
     updateViewerNum = (updateBy) => {
-        this.props.database.ref().child(`users/${this.state.user_db_key}/viewers`).once('value').then(snap => {
-        this.props.database.ref().child(`users/${this.state.user_db_key}/`).update({
-            viewers: snap.val() + updateBy,
-        })
-        })
+        // this.props.database.ref().child(`users/${this.state.user_db_key}/viewers`).once('value').then(snap => {
+        // this.props.database.ref().child(`users/${this.state.user_db_key}/`).update({
+        //     viewers: snap.val() + updateBy,
+        // })
+        // })
     }
 
     handleLeftClick = cameraName => {
