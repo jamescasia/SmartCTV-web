@@ -64,20 +64,19 @@ const Auth = AuthPage => MainApp =>
         //     action: newKey
         // })
 
-       let tempKey =  this.props.database 
+       var tempKey =  this.props.database 
           .ref().child(`/users/userID/messengerUsers`)
           .push().key;
           // .set(userID);
           this.props.database 
-          .ref().child(`/users/userID/messengerUsers`).set({tempKey:userID});
+          .ref().child(`/users/userID/messengerUsers/${tempKey}`).set(userID);
 
-
+ 
 
           // window.location.replace(
           //   decodeURIComponent(res) + "&authorization_code="+btoa (this.state.currentUserEmail)
           // );
-        return <AuthPage />;
-        } 
+        }  
       } else {
         return <AuthPage />;
       }

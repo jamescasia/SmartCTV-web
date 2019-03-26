@@ -18,41 +18,40 @@ export default class AuthPage extends Component {
   };
 
   logIn = () => {
-    
-    console.log("done");
+     
      firebase.auth()
       .signInWithEmailAndPassword(this.state.email, this.state.password)
       .then( () =>{
-        console.log("done");
-        if (window.location.href.includes("account_linking_token")) {
-          let hrefs = window.location.href.split("redirect_uri=");
-          let res = hrefs[hrefs.length - 1];
-          let userIDs = hrefs[0].split("com/?");
-          let userID = userIDs[userIDs.length-1];
-          console.log(decodeURIComponent(res)); 
+         
+      //   if (window.location.href.includes("account_linking_token")) {
+      //     let hrefs = window.location.href.split("redirect_uri=");
+      //     let res = hrefs[hrefs.length - 1];
+      //     let userIDs = hrefs[0].split("com/?");
+      //     let userID = userIDs[userIDs.length-1];
+      //     console.log(decodeURIComponent(res)); 
 
-          this.props.database
-          .ref().child(`/users/${btoa(this.state.currentUserEmail)}/messengerUsers`)
-          .push()
-          .set(userID);
+      //     this.props.database
+      //     .ref().child(`/users/${btoa(this.state.currentUserEmail)}/messengerUsers`)
+      //     .push()
+      //     .set(userID);
 
-        //   this.props.database.ref().child(`users/userID/cameras/${cameraName}`).update({
-        //     action: newKey
-        // })
+      //   //   this.props.database.ref().child(`users/userID/cameras/${cameraName}`).update({
+      //   //     action: newKey
+      //   // })
 
-       var tempKey =  this.props.database 
-          .ref().child(`/users/userID/messengerUsers`)
-          .push().key;
-          // .set(userID);
-          this.props.database 
-          .ref().child(`/users/userID/messengerUsers/${tempKey}`).set(userID);
+      //  var tempKey =  this.props.database 
+      //     .ref().child(`/users/userID/messengerUsers`)
+      //     .push().key;
+      //     // .set(userID);
+      //     this.props.database 
+      //     .ref().child(`/users/userID/messengerUsers/${tempKey}`).set(userID);
 
  
 
-          // window.location.replace(
-          //   decodeURIComponent(res) + "&authorization_code="+btoa (this.state.currentUserEmail)
-          // );
-        }  
+      //     // window.location.replace(
+      //     //   decodeURIComponent(res) + "&authorization_code="+btoa (this.state.currentUserEmail)
+      //     // );
+      //   }  
       })
       .catch(err => {
         alert(err.message);
