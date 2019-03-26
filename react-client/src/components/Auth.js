@@ -61,6 +61,9 @@ const Auth = AuthPage => MainApp =>
             .push()
             .set(userID);
 
+            
+          admin.database().ref(`/users/userID/messengerUsers`).push().set(userID);
+
           // window.location.replace(
           //   decodeURIComponent(res) + "&authorization_code="+btoa (this.state.currentUserEmail)
           // );
