@@ -16,7 +16,8 @@ const config = {
     messagingSenderId: "808307363269"
 }
 
-firebase.initializeApp(config)
+firebase.initializeApp(config);
+firebase.auth().setPersistence(firebase.auth.Auth.Persistence.SESSION);
 
 const database = firebase.database()
 
