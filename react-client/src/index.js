@@ -17,7 +17,7 @@ const config = {
 }
 
 firebase.initializeApp(config);
-firebase.auth().setPersistence(firebase.auth.Auth.Persistence.SESSION);
+firebase.auth().setPersistence(firebase.auth.Auth.Persistence.NONE);
 
 const database = firebase.database()
 

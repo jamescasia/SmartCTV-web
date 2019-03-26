@@ -19,7 +19,7 @@ export default class AuthPage extends Component {
 
   logIn = () => {
     firebase
-      .auth().setPersistence(firebase.auth.Auth.Persistence.SESSION)
+      .auth().setPersistence(firebase.auth.Auth.Persistence.NONE)
       .signInWithEmailAndPassword(this.state.email, this.state.password)
       .then( () =>{
         console.log("done");
