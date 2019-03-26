@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import * as firebase from "firebase";
+// onst admin = require('firebase-admin');
+import * as admin from "firebase-admin";
 
 import AuthPage from "./AuthPage/AuthPage";
 import MainApp from "./MainApp/MainApp";
@@ -10,6 +12,7 @@ const Auth = AuthPage => MainApp =>
       super(props);
 
       this.state = {
+        currentUserEmail:"",
         isAuthenticated: false
       };
     }
@@ -19,7 +22,8 @@ const Auth = AuthPage => MainApp =>
       firebase.auth().onAuthStateChanged(user => {
         if (user) {
           this.setState({
-            isAuthenticated: true
+            isAuthenticated: true,
+            currentUserEmail: user.email,
           });
 
           // this.props.database.ref().child(`users/${user.uid}`).on('value', (snap) => {
@@ -47,9 +51,10 @@ const Auth = AuthPage => MainApp =>
         if (window.location.href.includes("account_linking_token")) {
           let hrefs = window.location.href.split("redirect_uri=");
           let res = hrefs[hrefs.length - 1];
-          console.log(decodeURIComponent(res));
+          console.log(decodeURIComponent(res)); 
+
           window.location.replace(
-            decodeURIComponent(res) + "&authorization_code=SUCCESS_LOGIN"
+            decodeURIComponent(res) + "&authorization_code="+btoa (this.state.currentUserEmail)
           );
         } else {
           return (
