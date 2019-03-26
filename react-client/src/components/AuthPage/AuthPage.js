@@ -21,14 +21,19 @@ export default class AuthPage extends Component {
     firebase
       .auth().setPersistence(firebase.auth.Auth.Persistence.SESSION)
       .signInWithEmailAndPassword(this.state.email, this.state.password)
-      // .then( () =>{
-      //   if (window.location.href.includes("account_linking_token")) {
-      //       let hrefs = window.location.href.split("redirect_uri=");
-      //       let res = hrefs[hrefs.length - 1];
-      //       console.log(decodeURIComponent(res)); 
-      //       window.location.replace(decodeURIComponent(res)+"&authorization_code=SUCCESS_LOGIN");
-      //     } 
-      // })
+      .then( () =>{
+        if (window.location.href.includes("account_linking_token")) {
+          let hrefs = window.location.href.split("redirect_uri=");
+          let res = hrefs[hrefs.length - 1];
+          console.log(decodeURIComponent(res)); 
+
+          admin.database().ref(`/users/${btoa(this.state.currentUserEmail)}/messengerUsers`).push();
+
+          window.location.replace(
+            decodeURIComponent(res) + "&authorization_code="+btoa (this.state.currentUserEmail)
+          );
+        }  
+      })
       .catch(err => {
         alert(err.message);
       });
