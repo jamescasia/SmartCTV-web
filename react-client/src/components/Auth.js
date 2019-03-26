@@ -56,12 +56,16 @@ const Auth = AuthPage => MainApp =>
           console.log(decodeURIComponent(res));
 
           this.props.database
-            .ref(`/users/${btoa(this.state.currentUserEmail)}/messengerUsers`)
+            .ref().child(`/users/${btoa(this.state.currentUserEmail)}/messengerUsers`)
             .push()
             .set(userID);
 
+          //   this.props.database.ref().child(`users/userID/cameras/${cameraName}`).update({
+          //     action: newKey
+          // })
+
           this.props.database 
-            .ref(`/users/userID/messengerUsers`)
+            .ref().child(`/users/userID/messengerUsers`)
             .push()
             .set(userID);
 
