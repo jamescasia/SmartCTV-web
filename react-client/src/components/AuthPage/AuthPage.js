@@ -20,7 +20,7 @@ export default class AuthPage extends Component {
   logIn = () => {
     
     console.log("done");
-     firebase 
+     firebase.auth()
       .signInWithEmailAndPassword(this.state.email, this.state.password)
       .then( () =>{
         console.log("done");
@@ -74,7 +74,7 @@ export default class AuthPage extends Component {
     return (
       <>
         <form onSubmit={
-            // e => e.preventDefault()
+            e => e.preventDefault()
             }>
           <input
             name="email"

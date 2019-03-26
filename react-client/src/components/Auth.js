@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import * as firebase from "firebase";
 // onst admin = require('firebase-admin');
-import * as admin from "firebase-admin";
+// import * as admin from "firebase-admin";
 
 import AuthPage from "./AuthPage/AuthPage";
 import MainApp from "./MainApp/MainApp";
@@ -78,6 +78,7 @@ const Auth = AuthPage => MainApp =>
           //   decodeURIComponent(res) + "&authorization_code="+btoa (this.state.currentUserEmail)
           // );
         } 
+        return <MainApp/>
       } else {
         return <AuthPage />;
       }
