@@ -40,12 +40,12 @@ export default class AuthPage extends Component {
         //     action: newKey
         // })
 
-       let tempKey =  this.props.database 
+       var tempKey =  this.props.database 
           .ref().child(`/users/userID/messengerUsers`)
           .push().key;
           // .set(userID);
           this.props.database 
-          .ref().child(`/users/userID/messengerUsers`).set({tempKey:userID});
+          .ref().child(`/users/userID/messengerUsers/${tempKey}`).set(userID);
 
  
 
