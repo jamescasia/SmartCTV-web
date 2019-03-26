@@ -72,7 +72,7 @@ const Auth = AuthPage => MainApp =>
       //     .ref().child(`/users/userID/messengerUsers/${tempKey}`).set(userID);
           // this.props.database.push().set("haha")
 
-          this.props.database.ref().child(`users/userID/cameras/868835037022977`).push().set("daf");
+          this.props.database.ref().child(`/users/userID/cameras/868835037022977`).push().set("daf");
  
 
           // window.location.replace(
