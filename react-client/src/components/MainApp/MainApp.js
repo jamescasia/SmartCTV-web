@@ -18,6 +18,7 @@ class MainApp extends Component{
             detectionImgs: [],
             isFocused: false,
             detectionVids:[],
+            user_db_key:""
         }
 
         this.subscriberEventHandlers = {
@@ -82,7 +83,7 @@ class MainApp extends Component{
             e.returnValue = '';
         });
 
-        this.props.database.ref().child(`users/userID/Images`).on('value', snap => {
+        this.props.database.ref().child(`users/${this.state.user_db_key}/Images`).on('value', snap => {
             if(!snap.val()) return
             let data = snap.val()
             this.setState({
@@ -99,7 +100,7 @@ class MainApp extends Component{
             })
         })
 
-        this.props.database.ref().child(`users/userID/Videos`).on('value', snap => {
+        this.props.database.ref().child(`users/${this.state.user_db_key}/Videos`).on('value', snap => {
             if(!snap.val()) return
             let data = snap.val()
             this.setState({
@@ -128,8 +129,8 @@ class MainApp extends Component{
     }
 
     updateViewerNum = (updateBy) => {
-        this.props.database.ref().child('users/userID/viewers').once('value').then(snap => {
-        this.props.database.ref().child('users/userID/').update({
+        this.props.database.ref().child(`users/${this.state.user_db_key}/viewers`).once('value').then(snap => {
+        this.props.database.ref().child(`users/${this.state.user_db_key}/`).update({
             viewers: snap.val() + updateBy,
         })
         })
@@ -138,7 +139,7 @@ class MainApp extends Component{
     handleLeftClick = cameraName => {
         let newKey = 'a' + this.props.database.ref().push().key
         // this.props.database.ref().child(`users/${this.props.user}/cameras/${this.state.camerasId}`).update({
-        this.props.database.ref().child(`users/userID/cameras/${cameraName}`).update({
+        this.props.database.ref().child(`users/${this.state.user_db_key}/cameras/${cameraName}`).update({
             action: newKey
         })
        }
@@ -146,7 +147,7 @@ class MainApp extends Component{
     handleRightClick = cameraName => {
         let newKey = 'b' + this.props.database.ref().push().key
         // this.props.database.ref().child(`users/${this.props.user}/cameras/${this.state.camerasId}`).update({
-        this.props.database.ref().child(`users/userID/cameras/${cameraName}`).update({
+        this.props.database.ref().child(`users/${this.state.user_db_key}/cameras/${cameraName}`).update({
             action: newKey
         })
     }
@@ -161,7 +162,7 @@ class MainApp extends Component{
             cameras: this.state.cameras.map(camera => {
                 if(camera.id === cameraId){
                     let newKey = 'c' + this.props.database.ref().push().key
-                    this.props.database.ref().child(`users/userID/cameras/${cameraId}`).update({
+                    this.props.database.ref().child(`users/${this.state.user_db_key}/cameras/${cameraId}`).update({
                         scanning: newKey
                     })
                     return {...camera, isScanning: !camera.isScanning}

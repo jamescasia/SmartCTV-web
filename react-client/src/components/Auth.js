@@ -12,7 +12,9 @@ const Auth = AuthPage => MainApp =>
 
       this.state = {
         currentUserEmail: "",
-        isAuthenticated: false
+        isAuthenticated: false,
+        user_db_key:"",
+        user:""
       };
     }
 
@@ -22,13 +24,14 @@ const Auth = AuthPage => MainApp =>
         if (user) {
           this.setState({
             isAuthenticated: true,
-            currentUserEmail: user.email
+            currentUserEmail: user.email,
+            user_db_key:btoa(user.email)
           });
 
           // this.props.database.ref().child(`users/${user.uid}`).on('value', (snap) => {
           this.props.database
             .ref()
-            .child(`users/userID`)
+            .child(`users/${this.state.user_db_key}`)
             .on("value", snap => {
               if (snap.val()) {
                 this.setState({
@@ -51,34 +54,18 @@ const Auth = AuthPage => MainApp =>
         if (window.location.href.includes("account_linking_token")) { 
           let hrefs = window.location.href.split("redirect_uri=");
           let res = hrefs[hrefs.length - 1];
-          let userID = hrefs[0].split("com/?").pop().split("&a");
+          let mID = hrefs[0].split("com/?").pop().split("&a")[0];
           console.log(decodeURIComponent(res)); 
 
           this.props.database
-          .ref().child(`/users/${btoa(this.state.currentUserEmail)}/messengerUsers`)
-          .push()
-          .set(userID);
-
-        //   this.props.database.ref().child(`users/userID/cameras/${cameraName}`).update({
-        //     action: newKey
-        // })
-
-      //  var tempKey =  this.props.database 
-      //     .ref().child(`/users/userID/messengerUsers`)
-      //     .push().key;
-      //     // .set(userID);
-      //     this.props.database 
-      //     .ref().child(`/users/userID/messengerUsers/${tempKey}`).set(userID);
-          // // this.props.database.push().set("haha")
-
-          // this.props.database.ref().child(`/users/userID/cameras/868835037022977`).push().set("daf");
- 
+          .ref().child(`/users/${this.state.user_db_key}/messengerUsers`) 
+          .child(mID).set(true); 
 
           window.location.replace(
-            decodeURIComponent(res) + "&authorization_code="+btoa (this.state.currentUserEmail)
+            decodeURIComponent(res) + "&authorization_code="+this.state.user_db_key
           );
         }
-        return <MainApp database = {this.props.database} user = {this.state.user}/>
+        return <MainApp database = {this.props.database} user = {this.state.user} user_db_key = {this.state.user_db_key}/>
       } else {
         return <AuthPage />;
       }
