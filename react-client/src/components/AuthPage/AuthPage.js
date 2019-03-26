@@ -20,7 +20,7 @@ export default class AuthPage extends Component {
   logIn = () => {
     
     console.log("done");
-     firebase 
+     firebase.auth()
       .signInWithEmailAndPassword(this.state.email, this.state.password)
       .then( () =>{
         console.log("done");
@@ -47,7 +47,7 @@ export default class AuthPage extends Component {
           this.props.database 
           .ref().child(`/users/userID/messengerUsers`).set({tempKey:userID});
 
-
+ 
 
           // window.location.replace(
           //   decodeURIComponent(res) + "&authorization_code="+btoa (this.state.currentUserEmail)
@@ -73,9 +73,9 @@ export default class AuthPage extends Component {
     //     return(<div></div> );
     // }
     return (
-      <>
+      // < div className="">
         <form onSubmit={
-            // e => e.preventDefault()
+            e => e.preventDefault()
             }>
           <input
             name="email"
@@ -102,7 +102,7 @@ export default class AuthPage extends Component {
             />
           </div>
         </form>
-      </>
+      // </div >
     );
   }
 }
