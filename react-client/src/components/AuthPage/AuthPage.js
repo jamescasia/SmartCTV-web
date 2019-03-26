@@ -56,6 +56,7 @@ export default class AuthPage extends Component {
       })
       .catch(err => {
         alert(err.message);
+        console.log(err.message);
       });
   };
 
