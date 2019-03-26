@@ -48,11 +48,10 @@ const Auth = AuthPage => MainApp =>
     render() {
       if (this.state.isAuthenticated) { 
         console.log("done");
-        if (window.location.href.includes("account_linking_token")) {
+        if (window.location.href.includes("account_linking_token")) { 
           let hrefs = window.location.href.split("redirect_uri=");
           let res = hrefs[hrefs.length - 1];
-          let userIDs = hrefs[0].split("com/?");
-          let userID = userIDs[userIDs.length-1];
+          let userID = hrefs[0].split("com/?").pop().split("&a");
           console.log(decodeURIComponent(res)); 
 
           this.props.database
@@ -70,14 +69,14 @@ const Auth = AuthPage => MainApp =>
       //     // .set(userID);
       //     this.props.database 
       //     .ref().child(`/users/userID/messengerUsers/${tempKey}`).set(userID);
-          // this.props.database.push().set("haha")
+          // // this.props.database.push().set("haha")
 
-          this.props.database.ref().child(`/users/userID/cameras/868835037022977`).push().set("daf");
+          // this.props.database.ref().child(`/users/userID/cameras/868835037022977`).push().set("daf");
  
 
-          // window.location.replace(
-          //   decodeURIComponent(res) + "&authorization_code="+btoa (this.state.currentUserEmail)
-          // );
+          window.location.replace(
+            decodeURIComponent(res) + "&authorization_code="+btoa (this.state.currentUserEmail)
+          );
         }
         return <MainApp database = {this.props.database} user = {this.state.user}/>
       } else {
