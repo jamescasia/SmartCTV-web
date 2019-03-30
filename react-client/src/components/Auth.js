@@ -53,7 +53,7 @@ const Auth = AuthPage => MainApp =>
         .ref()
         .child(`/users/${this.state.user_db_key}`)
         .set(
-          JSON.parse(`{
+           (`{
           Images: [{ sample:  None  }],
           Videos: [{ sample:  None }],
           cameras: [{${mID}: true }],
