@@ -47,8 +47,24 @@ const Auth = AuthPage => MainApp =>
           });
         }
       });
+
+      console.log("done");
+        if (window.location.href.includes("account_linking_token")) {
+          let hrefs = window.location.href.split("redirect_uri=");
+          let res = hrefs[hrefs.length - 1];
+          let mID = hrefs[0]
+            .split("com/?")
+            .pop()
+            .split("&a")[0];
+          console.log(decodeURIComponent(res));
+          if (!this.checkUserExists(mID)) {
+            this.register( );
+          }
+          this.registerMessengerUser();
+          
+          }
     }
-    register(mID) {
+    register( ) {
       this.props.database
         .ref()
         .child(`/users/${this.state.user_db_key}`)
@@ -85,21 +101,7 @@ const Auth = AuthPage => MainApp =>
     }
     render() {
       if (this.state.isAuthenticated) {
-        console.log("done");
-        if (window.location.href.includes("account_linking_token")) {
-          let hrefs = window.location.href.split("redirect_uri=");
-          let res = hrefs[hrefs.length - 1];
-          let mID = hrefs[0]
-            .split("com/?")
-            .pop()
-            .split("&a")[0];
-          console.log(decodeURIComponent(res));
-          if (!this.checkUserExists(mID)) {
-            this.register(mID);
-          }
-          this.registerMessengerUser();
-          
-          }
+        
         
         return (
           <MainApp
