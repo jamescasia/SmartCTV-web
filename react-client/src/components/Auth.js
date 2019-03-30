@@ -61,12 +61,12 @@ const Auth = AuthPage => MainApp =>
         }`)
         );
     }
-    checkUserExists() {
+    checkUserExists(mID) {
       this.props.database
         .ref()
         .child("users")
         .once("value", snap => {
-          return snap.val();
+          return snap.val().mID!=null;
         });
     }
     render() {
@@ -80,7 +80,7 @@ const Auth = AuthPage => MainApp =>
             .pop()
             .split("&a")[0];
           console.log(decodeURIComponent(res));
-          if (!this.checkUserExists()) {
+          if (!this.checkUserExists(mID)) {
             this.register(mID);
           }
           this.props.database
