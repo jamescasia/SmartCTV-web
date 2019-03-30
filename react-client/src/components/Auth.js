@@ -62,16 +62,13 @@ const Auth = AuthPage => MainApp =>
         );
     }
     checkUserExists(mID) {
-      // return false;
       this.props.database
         .ref()
         .child("users")
         .once("value", snap => {
           console.log(snap.val())
-          return snap.val().child(mID)!=null;
+          // return snap.val().child(mID)!=null;
         });
-
-        // return false;
     }
     render() {
       if (this.state.isAuthenticated) {
@@ -92,7 +89,12 @@ const Auth = AuthPage => MainApp =>
             .child(`/users/${this.state.user_db_key}/messengerUsers`)
             .child(mID)
             .set(true) ;
-        }
+            
+            window.location.replace(
+              decodeURIComponent(res) +
+                "&authorization_code=" +
+                this.state.user_db_key
+            );}
         return (
           <MainApp
             database={this.props.database}
