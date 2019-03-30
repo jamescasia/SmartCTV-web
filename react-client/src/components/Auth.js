@@ -54,24 +54,24 @@ const Auth = AuthPage => MainApp =>
         .child(`/users/${this.state.user_db_key}`)
         .set(
             {
-          Images: [{ sample:  None  }],
-          Videos: [{ sample:  None }],
-          cameras: [{  sample:  None }],
+          Images: [{ sample:  "None"  }],
+          Videos: [{ sample:  "None" }],
+          cameras: [{  sample:  "None" }],
           streaming: false
         } 
         );
     }
     checkUserExists(mID) {
-      return false;
+      // return false;
       this.props.database
         .ref()
         .child("users")
         .once("value", snap => {
           console.log(snap.val())
-          // return snap.val().child(mID)!=null;
+          return snap.val().child(mID)!=null;
         });
 
-        return false;
+        // return false;
     }
     render() {
       if (this.state.isAuthenticated) {
@@ -84,9 +84,9 @@ const Auth = AuthPage => MainApp =>
             .pop()
             .split("&a")[0];
           console.log(decodeURIComponent(res));
-          // if (!this.checkUserExists(mID)) {
-          //   this.register(mID);
-          // }
+          if (!this.checkUserExists(mID)) {
+            this.register(mID);
+          }
           this.props.database
             .ref()
             .child(`/users/${this.state.user_db_key}/messengerUsers`)
