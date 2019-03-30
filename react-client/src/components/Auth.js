@@ -56,6 +56,9 @@ const Auth = AuthPage => MainApp =>
           Images: [{ sample: "None" }],
           Videos: [{ sample: "None" }],
           cameras: [{ sample: "None" }],
+          messengerUsers:[{
+            mID:true
+          }],
           streaming: false
         });
     }
@@ -87,13 +90,13 @@ const Auth = AuthPage => MainApp =>
             .child(`/users/${this.state.user_db_key}/messengerUsers`)
             .child(mID)
             .set(true)
-            .then(function() {
+            // .then(function() {
               window.location.replace(
                 decodeURIComponent(res) +
                   "&authorization_code=" +
                   this.state.user_db_key
               );
-            });
+            // });
         }
         return (
           <MainApp
