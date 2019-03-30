@@ -66,7 +66,7 @@ const Auth = AuthPage => MainApp =>
         .ref()
         .child("users")
         .once("value", snap => {
-          return snap.val().mID!=null;
+          return snap.val().child(mID)!=null;
         });
     }
     render() {
