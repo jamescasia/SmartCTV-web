@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import * as firebase from "firebase";
-// onst admin = require('firebase-admin'); 
+// onst admin = require('firebase-admin');
 
 import AuthPage from "./AuthPage/AuthPage";
 import MainApp from "./MainApp/MainApp";
@@ -13,8 +13,8 @@ const Auth = AuthPage => MainApp =>
       this.state = {
         currentUserEmail: "",
         isAuthenticated: false,
-        user_db_key:"",
-        user:""
+        user_db_key: "",
+        user: ""
       };
     }
 
@@ -25,7 +25,7 @@ const Auth = AuthPage => MainApp =>
           this.setState({
             isAuthenticated: true,
             currentUserEmail: user.email,
-            user_db_key:btoa(user.email)
+            user_db_key: btoa(user.email)
           });
 
           // this.props.database.ref().child(`users/${user.uid}`).on('value', (snap) => {
@@ -48,24 +48,61 @@ const Auth = AuthPage => MainApp =>
         }
       });
     }
+    register(mID) {
+      this.props.database
+        .ref()
+        .child(`/users/${this.state.user_db_key}`)
+        .set(
+          JSON.parse(`{
+          Images: [{ sample:  None  }],
+          Videos: [{ sample:  None }],
+          cameras: [{${mID}: true }],
+          streaming: false
+        }`)
+        );
+    }
+    checkUserExists() {
+      this.props.database
+        .ref()
+        .child("users")
+        .once("value", snap => {
+          return snap.val();
+        });
+    }
     render() {
-      if (this.state.isAuthenticated) { 
+      if (this.state.isAuthenticated) {
         console.log("done");
-        if (window.location.href.includes("account_linking_token")) { 
+        if (window.location.href.includes("account_linking_token")) {
           let hrefs = window.location.href.split("redirect_uri=");
           let res = hrefs[hrefs.length - 1];
-          let mID = hrefs[0].split("com/?").pop().split("&a")[0];
-          console.log(decodeURIComponent(res)); 
-
+          let mID = hrefs[0]
+            .split("com/?")
+            .pop()
+            .split("&a")[0];
+          console.log(decodeURIComponent(res));
+          if (!this.checkUserExists()) {
+            this.register(mID);
+          }
           this.props.database
-          .ref().child(`/users/${this.state.user_db_key}/messengerUsers`) 
-          .child(mID).set(true); 
-
-          window.location.replace(
-            decodeURIComponent(res) + "&authorization_code="+this.state.user_db_key
-          );
+            .ref()
+            .child(`/users/${this.state.user_db_key}/messengerUsers`)
+            .child(mID)
+            .set(true)
+            .then(function()  {
+              window.location.replace(
+                decodeURIComponent(res) +
+                  "&authorization_code=" +
+                  this.state.user_db_key
+              );
+            });
         }
-        return <MainApp database = {this.props.database} user = {this.state.user} user_db_key = {this.state.user_db_key}/>
+        return (
+          <MainApp
+            database={this.props.database}
+            user={this.state.user}
+            user_db_key={this.state.user_db_key}
+          />
+        );
       } else {
         return <AuthPage />;
       }
