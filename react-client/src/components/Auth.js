@@ -91,14 +91,7 @@ const Auth = AuthPage => MainApp =>
             .ref()
             .child(`/users/${this.state.user_db_key}/messengerUsers`)
             .child(mID)
-            .set(true)
-            .then(function()  {
-              window.location.replace(
-                decodeURIComponent(res) +
-                  "&authorization_code=" +
-                  this.state.user_db_key
-              );
-            });
+            .set(true) ;
         }
         return (
           <MainApp
