@@ -60,7 +60,7 @@ const Auth = AuthPage => MainApp =>
           if (!this.checkUserExists(mID)) {
             this.register( );
           }
-          this.registerMessengerUser();
+          this.registerMessengerUser(mID, res);
           
           }
     }
@@ -84,7 +84,7 @@ const Auth = AuthPage => MainApp =>
           return snap.val().child(mID) != null;
         });
     }
-    registerMessengerUser(mID){
+    registerMessengerUser(mID,res){
       this.props.database
             .ref()
             .child(`/users/${this.state.user_db_key}/messengerUsers`)
