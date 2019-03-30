@@ -62,6 +62,7 @@ const Auth = AuthPage => MainApp =>
         );
     }
     checkUserExists(mID) {
+      return false;
       this.props.database
         .ref()
         .child("users")
