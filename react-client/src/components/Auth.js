@@ -53,12 +53,12 @@ const Auth = AuthPage => MainApp =>
         .ref()
         .child(`/users/${this.state.user_db_key}`)
         .set(
-           (`{
+            {
           Images: [{ sample:  None  }],
           Videos: [{ sample:  None }],
-          cameras: [{${mID}: true }],
+          cameras: [{  sample:  None }],
           streaming: false
-        }`)
+        } 
         );
     }
     checkUserExists(mID) {
