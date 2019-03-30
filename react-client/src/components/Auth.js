@@ -84,9 +84,9 @@ const Auth = AuthPage => MainApp =>
             .pop()
             .split("&a")[0];
           console.log(decodeURIComponent(res));
-          if (!this.checkUserExists(mID)) {
-            this.register(mID);
-          }
+          // if (!this.checkUserExists(mID)) {
+          //   this.register(mID);
+          // }
           this.props.database
             .ref()
             .child(`/users/${this.state.user_db_key}/messengerUsers`)
