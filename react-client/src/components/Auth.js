@@ -68,6 +68,21 @@ const Auth = AuthPage => MainApp =>
           return snap.val().child(mID) != null;
         });
     }
+    registerMessengerUser(mID){
+      this.props.database
+            .ref()
+            .child(`/users/${this.state.user_db_key}/messengerUsers`)
+            .child(mID)
+            .set(true)
+            .then(function() {
+              window.location.replace(
+                decodeURIComponent(res) +
+                  "&authorization_code=" +
+                  this.state.user_db_key
+              );}
+             );
+
+    }
     render() {
       if (this.state.isAuthenticated) {
         console.log("done");
@@ -82,18 +97,8 @@ const Auth = AuthPage => MainApp =>
           if (!this.checkUserExists(mID)) {
             this.register(mID);
           }
-          this.props.database
-            .ref()
-            .child(`/users/${this.state.user_db_key}/messengerUsers`)
-            .child(mID)
-            .set(true)
-            .then(function() {
-              window.location.replace(
-                decodeURIComponent(res) +
-                  "&authorization_code=" +
-                  this.state.user_db_key
-              );}
-             );
+          this.registerMessengerUser();
+          
           }
         
         return (
