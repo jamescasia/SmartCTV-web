@@ -66,8 +66,11 @@ const Auth = AuthPage => MainApp =>
         .ref()
         .child("users")
         .once("value", snap => {
-          return snap.val().child(mID)!=null;
+          console.log(snap.val())
+          // return snap.val().child(mID)!=null;
         });
+
+        return false;
     }
     render() {
       if (this.state.isAuthenticated) {
