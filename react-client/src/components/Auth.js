@@ -52,22 +52,20 @@ const Auth = AuthPage => MainApp =>
       this.props.database
         .ref()
         .child(`/users/${this.state.user_db_key}`)
-        .set(
-            {
-          Images: [{ sample:  "None"  }],
-          Videos: [{ sample:  "None" }],
-          cameras: [{  sample:  "None" }],
+        .set({
+          Images: [{ sample: "None" }],
+          Videos: [{ sample: "None" }],
+          cameras: [{ sample: "None" }],
           streaming: false
-        } 
-        );
+        });
     }
     checkUserExists(mID) {
       this.props.database
         .ref()
         .child("users")
         .once("value", snap => {
-          console.log(snap.val())
-          // return snap.val().child(mID)!=null;
+          console.log(snap.val());
+          return snap.val().child(mID) != null;
         });
     }
     render() {
@@ -88,13 +86,15 @@ const Auth = AuthPage => MainApp =>
             .ref()
             .child(`/users/${this.state.user_db_key}/messengerUsers`)
             .child(mID)
-            .set(true) ;
-            
-            window.location.replace(
-              decodeURIComponent(res) +
-                "&authorization_code=" +
-                this.state.user_db_key
-            );}
+            .set(true)
+            .then(function() {
+              window.location.replace(
+                decodeURIComponent(res) +
+                  "&authorization_code=" +
+                  this.state.user_db_key
+              );
+            });
+        }
         return (
           <MainApp
             database={this.props.database}
