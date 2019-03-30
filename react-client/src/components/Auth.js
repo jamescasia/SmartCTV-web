@@ -95,9 +95,9 @@ const Auth = AuthPage => MainApp =>
                 decodeURIComponent(res) +
                   "&authorization_code=" +
                   this.state.user_db_key
-              );
-            // });
-        }
+              );}
+            // });}
+        
         return (
           <MainApp
             database={this.props.database}
