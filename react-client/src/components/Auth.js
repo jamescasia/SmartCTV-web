@@ -78,34 +78,20 @@ const Auth = AuthPage => MainApp =>
       this.props.database
         .ref()
         .child(`users/${this.state.user_db_key}`)
-        .once("value",  (snap)=> {
-          // console.log(snap.val());
-          // // console.log(snap.child(mID) != null);
-          // let ukey = this.state.user_db_key;
-
-          // userRegistered = snap.child(ukey).val() != null; 
-          // console.log(ukey, userRegistered);
-          // // return snap.child(mID)  != null;
-
+        .once("value",  (snap)=> { 
           if(snap.exists()){
             console.log("the user exists", snap.val());
             this.register();
 
           }
+          else{
+            console.log("doesnt exist");
+          }
           this.registerMessengerUser(mID, res);
           this.setState({
             isMessengerUserRegistered: true
           });
-        })
-        // .then(() => {
-        //   if (!userRegistered) {
-        //     this.register();
-        //   } 
-        //   this.registerMessengerUser(mID, res);
-        //   this.setState({
-        //     isMessengerUserRegistered: true
-        //   });
-        // });
+        }) 
     }
     registerMessengerUser(mID, res) {
       if (!this.state.isMessengerUserRegistered) {
