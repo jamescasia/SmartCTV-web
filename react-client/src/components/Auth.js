@@ -15,7 +15,8 @@ const Auth = AuthPage => MainApp =>
         isAuthenticated: false,
         user_db_key: "",
         user: "",
-        isMessengerUserRegistered: false
+        isMessengerUserRegistered: false,
+        isUserRegistered:false,
       };
     }
 
@@ -50,6 +51,7 @@ const Auth = AuthPage => MainApp =>
       });
     }
     register() {
+      if(!this.isUserRegistered){
       this.props.database
         .ref()
         .child(`/users/${this.state.user_db_key}`)
@@ -64,6 +66,9 @@ const Auth = AuthPage => MainApp =>
         .ref()
         .child(`/users/${this.state.user_db_key}/uid`)
         .set(this.state.user);
+        this.setState({
+          isUserRegistered: true
+        }); } 
     }
     checkUserExists(mID) {
       this.props.database
@@ -88,11 +93,12 @@ const Auth = AuthPage => MainApp =>
                 this.state.user_db_key
             );
           });
+          this.setState({
+            isMessengerUserRegistered: true
+          });  
       }
 
-      this.setState({
-        isMessengerUserRegistered: true
-      });
+     
     }
     render() {
       if (this.state.isAuthenticated) {
