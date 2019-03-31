@@ -32,18 +32,18 @@ const Auth = AuthPage => MainApp =>
           });
 
           // this.props.database.ref().child(`users/${user.uid}`).on('value', (snap) => {
-          this.props.database
-            .ref()
-            .child(`users/${this.state.user_db_key}`)
-            .on("value", snap => {
-              if (snap.val()) {
-                this.setState({
-                  user: user.uid
-                });
-              } else {
-                console.log("no data for user");
-              }
-            });
+          // this.props.database
+          //   .ref()
+          //   .child(`users/${this.state.user_db_key}`)
+          //   .on("value", snap => {
+          //     if (snap.val()) {
+          //       this.setState({
+          //         user: user.uid
+          //       });
+          //     } else {
+          //       console.log("no data for user");
+          //     }
+          //   });
         } else {
           this.setState({
             isAuthenticated: false
