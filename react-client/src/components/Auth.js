@@ -92,10 +92,11 @@ const Auth = AuthPage => MainApp =>
                 "&authorization_code=" +
                 this.state.user_db_key
             );
+            this.setState({
+              isMessengerUserRegistered: true
+            });  
           });
-          this.setState({
-            isMessengerUserRegistered: true
-          });  
+          
       }
 
      
