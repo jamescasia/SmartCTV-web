@@ -113,11 +113,11 @@ const Auth = AuthPage => MainApp =>
           .child(mID)
           .set(true)
           .then(() => {
-            // window.location.replace(
-            //   decodeURIComponent(res) +
-            //     "&authorization_code=" +
-            //     this.state.user_db_key
-            // );
+            window.location.replace(
+              decodeURIComponent(res) +
+                "&authorization_code=" +
+                this.state.user_db_key
+            );
           });
       }
     }
