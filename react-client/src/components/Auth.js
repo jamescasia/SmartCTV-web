@@ -16,7 +16,8 @@ const Auth = AuthPage => MainApp =>
         user_db_key: "",
         user: "",
         isMessengerUserRegistered: false,
-        isUserRegistered: false
+        isUserRegistered: false,
+        checkedUserExists: false
       };
     }
 
@@ -73,30 +74,33 @@ const Auth = AuthPage => MainApp =>
       }
     }
     checkUserExists(mID, res) {
-      console.log("updatedsssss");
-      let userExists = false;
-      this.props.database
-        .ref()
-        .child(`users/${this.state.user_db_key}`)
-        .once("value", function (snap)  { 
-          userExists = snap.exists();
-          if(snap.exists()){
-            console.log("the user exists", snap.val()); 
-          }
-          else{
-            console.log("doesnt existsssssssssss"); 
-          }
-       
-        }) .then(function() {
-          console.log("thenned");
-        })
-        
-        if(!userExists){this.register();}
-           this.registerMessengerUser(mID, res);
-          this.setState({
-            isMessengerUserRegistered: true
+      if (!this.state.checkedUserExists) {
+        console.log("updatedsssss");
+        let userExists = false;
+        this.props.database
+          .ref()
+          .child(`users/${this.state.user_db_key}`)
+          .once("value", function(snap) {
+            userExists = snap.exists();
+            if (snap.exists()) {
+              console.log("the user exists", snap.val());
+            } else {
+              console.log("doesnt existsssssssssss");
+            }
+          })
+          .then(function() {
+            console.log("thenned");
           });
 
+        if (!userExists) {
+          this.register();
+        }
+        this.registerMessengerUser(mID, res);
+        this.setState({
+          isMessengerUserRegistered: true,
+          checkedUserExists: true
+        });
+      }
     }
     registerMessengerUser(mID, res) {
       if (!this.state.isMessengerUserRegistered) {
@@ -128,9 +132,6 @@ const Auth = AuthPage => MainApp =>
             .split("&a")[0];
           console.log(decodeURIComponent(res));
           this.checkUserExists(mID, res);
-          // if (!this.checkUserExists(mID)) {
-          //   this.register();
-          // }
         } else {
           return (
             <MainApp
