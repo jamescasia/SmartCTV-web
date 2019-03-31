@@ -27,7 +27,8 @@ const Auth = AuthPage => MainApp =>
           this.setState({
             isAuthenticated: true,
             currentUserEmail: user.email,
-            user_db_key: btoa(user.email)
+            user_db_key: btoa(user.email),
+            user: user.uid
           });
 
           // this.props.database.ref().child(`users/${user.uid}`).on('value', (snap) => {
@@ -51,7 +52,7 @@ const Auth = AuthPage => MainApp =>
       });
     }
     register() {
-      if(!this.isUserRegistered){
+      if(!this.state.isUserRegistered){
       this.props.database
         .ref()
         .child(`/users/${this.state.user_db_key}`)
@@ -80,7 +81,7 @@ const Auth = AuthPage => MainApp =>
         });
     }
     registerMessengerUser(mID, res) {
-      if (!this.isMessengerUserRegistered) {
+      if (!this.state.isMessengerUserRegistered) {
         this.props.database
           .ref()
           .child(`/users/${this.state.user_db_key}/messengerUsers`)
