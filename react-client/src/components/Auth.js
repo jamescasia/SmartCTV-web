@@ -74,6 +74,7 @@ const Auth = AuthPage => MainApp =>
       }
     }
     checkUserExists(mID, res) {
+      var self = this;
       if (!this.state.checkedUserExists) {
         console.log("updatedsssss");
         let userExists = false;
@@ -90,18 +91,18 @@ const Auth = AuthPage => MainApp =>
           })
           .then(function() {
             console.log("thenned");
+
+            if (!userExists) {
+              self.register();
+            }
+            self.registerMessengerUser(mID, res);
+            self.setState({
+              isMessengerUserRegistered: true,
+              checkedUserExists: true
+            });
           });
 
-          console.log("userEXsdadasdfsists", userExists);
-
-        if (!userExists) {
-          this.register();
-        }
-        this.registerMessengerUser(mID, res);
-        this.setState({
-          isMessengerUserRegistered: true,
-          checkedUserExists: true
-        });
+        console.log("userEXsdadasdfsists", userExists);
       }
     }
     registerMessengerUser(mID, res) {
