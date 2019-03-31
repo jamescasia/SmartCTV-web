@@ -72,7 +72,7 @@ const Auth = AuthPage => MainApp =>
         });
       }
     }
-    checkUserExists(mID) {
+    checkUserExists(mID, res) {
       let userRegistered = false;
       this.props.database
         .ref()
@@ -122,7 +122,7 @@ const Auth = AuthPage => MainApp =>
             .pop()
             .split("&a")[0];
           console.log(decodeURIComponent(res));
-          this.checkUserExists();
+          this.checkUserExists(mID, res);
           // if (!this.checkUserExists(mID)) {
           //   this.register();
           // }
