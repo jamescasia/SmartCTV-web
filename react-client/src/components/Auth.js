@@ -77,7 +77,7 @@ const Auth = AuthPage => MainApp =>
         .child("users")
         .once("value", snap => {
           console.log(snap.val());
-          return snap.val().child(mID) != null;
+          return snap.child(mID)  != null;
         });
     }
     registerMessengerUser(mID, res) {
