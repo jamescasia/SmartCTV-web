@@ -14,11 +14,10 @@ const Auth = AuthPage => MainApp =>
         currentUserEmail: "",
         isAuthenticated: false,
         user_db_key: "",
-        user: ""
+        user: "",
+        isMessengerUserRegistered: false
       };
-      
     }
-    
 
     componentDidMount() {
       //check auth with firebase
@@ -49,23 +48,22 @@ const Auth = AuthPage => MainApp =>
           });
         }
       });
- 
-      
     }
-    register( ) {
+    register() {
       this.props.database
         .ref()
         .child(`/users/${this.state.user_db_key}`)
-        .set({ 
-          
+        .set({
           Images: { sample: "None" },
           Videos: { sample: "None" },
-          cameras: { sample: "None" }, 
+          cameras: { sample: "None" },
           streaming: false
         });
 
-        this.props.database.ref().child(`/users/${this.state.user_db_key}/uid`)
-        .set( this.state.user);
+      this.props.database
+        .ref()
+        .child(`/users/${this.state.user_db_key}/uid`)
+        .set(this.state.user);
     }
     checkUserExists(mID) {
       this.props.database
@@ -76,24 +74,32 @@ const Auth = AuthPage => MainApp =>
           return snap.val().child(mID) != null;
         });
     }
-    registerMessengerUser(mID,res){
-      this.props.database
-            .ref()
-            .child(`/users/${this.state.user_db_key}/messengerUsers`)
-            .child(mID)
-            .set(true)
-            .then(function() {
-              window.location.replace(
-                decodeURIComponent(res) +
-                  "&authorization_code=" +
-                  this.state.user_db_key
-              );}
-             );
+    registerMessengerUser(mID, res) {
+      if (!this.isMessengerUserRegistered) {
+        this.props.database
+          .ref()
+          .child(`/users/${this.state.user_db_key}/messengerUsers`)
+          .child(mID)
+          .set(true)
+          .then(function() {
+            window.location.replace(
+              decodeURIComponent(res) +
+                "&authorization_code=" +
+                this.state.user_db_key
+            );
+          });
+      }
 
+      this.setState({
+        isMessengerUserRegistered: true
+      });
     }
     render() {
       if (this.state.isAuthenticated) {
-        if (window.location.href.includes("account_linking_token") && this.state.isAuthenticated) {
+        if (
+          window.location.href.includes("account_linking_token") &&
+          this.state.isAuthenticated
+        ) {
           let hrefs = window.location.href.split("redirect_uri=");
           let res = hrefs[hrefs.length - 1];
           let mID = hrefs[0]
@@ -102,14 +108,12 @@ const Auth = AuthPage => MainApp =>
             .split("&a")[0];
           console.log(decodeURIComponent(res));
           if (!this.checkUserExists(mID)) {
-            this.register( );
+            this.register();
           }
-          
+
           this.registerMessengerUser(mID, res);
-          
-          }
-        
-        
+        }
+
         return (
           <MainApp
             database={this.props.database}
