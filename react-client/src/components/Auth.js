@@ -77,7 +77,7 @@ const Auth = AuthPage => MainApp =>
       this.props.database
         .ref()
         .child(`users/${this.state.user_db_key}`)
-        .once("value",  (snap)=> { 
+        .once("value", function (snap)  { 
           if(snap.exists()){
             console.log("the user exists", snap.val());
             this.register();
