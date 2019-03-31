@@ -92,7 +92,7 @@ const Auth = AuthPage => MainApp =>
             console.log("thenned");
           });
 
-          console.log("userEXists", userExists);
+          console.log("userEXsdadsists", userExists);
 
         if (!userExists) {
           this.register();
