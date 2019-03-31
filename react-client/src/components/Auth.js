@@ -102,7 +102,7 @@ const Auth = AuthPage => MainApp =>
             });
           });
 
-        console.log("userEXsdadasdfsists", userExists);
+        console.log("userEXsdadasdfsssists", userExists);
       }
     }
     registerMessengerUser(mID, res) {
