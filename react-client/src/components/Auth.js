@@ -80,11 +80,12 @@ const Auth = AuthPage => MainApp =>
         .once("value", function (snap)  { 
           if(snap.exists()){
             console.log("the user exists", snap.val());
-            this.register();
+            
 
           }
           else{
             console.log("doesnt exist");
+            this.register();
           }
           this.registerMessengerUser(mID, res);
           this.setState({
