@@ -94,6 +94,7 @@ const Auth = AuthPage => MainApp =>
           //   isMessengerUserRegistered: true
           // });
         }) .then(function() {
+          if(!userExists){this.register();}
           console.log("thenned");
         })
     }
