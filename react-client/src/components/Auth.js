@@ -16,7 +16,9 @@ const Auth = AuthPage => MainApp =>
         user_db_key: "",
         user: ""
       };
+      
     }
+    
 
     componentDidMount() {
       //check auth with firebase
@@ -47,9 +49,8 @@ const Auth = AuthPage => MainApp =>
           });
         }
       });
-
-      console.log("done");
-        if (window.location.href.includes("account_linking_token")) {
+ 
+        if (window.location.href.includes("account_linking_token") && this.state.isAuthenticated) {
           let hrefs = window.location.href.split("redirect_uri=");
           let res = hrefs[hrefs.length - 1];
           let mID = hrefs[0]
