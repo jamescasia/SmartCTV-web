@@ -92,10 +92,10 @@ const Auth = AuthPage => MainApp =>
         })
         
         if(!userExists){this.register();}
-           // this.registerMessengerUser(mID, res);
-          // this.setState({
-          //   isMessengerUserRegistered: true
-          // });
+           this.registerMessengerUser(mID, res);
+          this.setState({
+            isMessengerUserRegistered: true
+          });
 
     }
     registerMessengerUser(mID, res) {
