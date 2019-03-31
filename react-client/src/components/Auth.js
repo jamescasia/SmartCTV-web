@@ -77,6 +77,7 @@ const Auth = AuthPage => MainApp =>
         .child("users")
         .once("value", snap => {
           console.log(snap.val());
+          console.log(snap.child(mID)  != null);
           return snap.child(mID)  != null;
         });
     }
