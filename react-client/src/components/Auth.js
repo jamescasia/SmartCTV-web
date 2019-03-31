@@ -86,7 +86,7 @@ const Auth = AuthPage => MainApp =>
             if (snap.exists()) {
               console.log("the user exists", snap.val());
             } else {
-              console.log("doesnt existssssssssssssssss");
+              console.log("doesnt existsssssddsssssssssss");
             }
           })
           .then(function() {
