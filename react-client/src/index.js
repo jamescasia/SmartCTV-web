@@ -20,8 +20,7 @@ firebase.initializeApp(config);
 firebase.auth().setPersistence(firebase.auth.Auth.Persistence.SESSION);
 
 const database = firebase.database()
-
-console.log('huy atay')
+ 
 
 ReactDOM.render(<App database = {database}/>, document.getElementById('root'));
 
