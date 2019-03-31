@@ -56,12 +56,16 @@ const Auth = AuthPage => MainApp =>
       this.props.database
         .ref()
         .child(`/users/${this.state.user_db_key}`)
-        .set({
+        .set({ 
+          
           Images: { sample: "None" },
           Videos: { sample: "None" },
           cameras: { sample: "None" }, 
           streaming: false
         });
+
+        this.props.database.ref().child(`/users/${this.state.user_db_key}/uid`)
+        .set( this.state.user);
     }
     checkUserExists(mID) {
       this.props.database
