@@ -16,7 +16,7 @@ const Auth = AuthPage => MainApp =>
         user_db_key: "",
         user: "",
         isMessengerUserRegistered: false,
-        isUserRegistered:false,
+        isUserRegistered: false
       };
     }
 
@@ -52,33 +52,45 @@ const Auth = AuthPage => MainApp =>
       });
     }
     register() {
-      if(!this.state.isUserRegistered){
-      this.props.database
-        .ref()
-        .child(`/users/${this.state.user_db_key}`)
-        .set({
-          Images: { sample: "None" },
-          Videos: { sample: "None" },
-          cameras: { sample: "None" },
-          streaming: false
-        });
+      if (!this.state.isUserRegistered) {
+        this.props.database
+          .ref()
+          .child(`/users/${this.state.user_db_key}`)
+          .set({
+            Images: { sample: "None" },
+            Videos: { sample: "None" },
+            cameras: { sample: "None" },
+            streaming: false
+          });
 
-      this.props.database
-        .ref()
-        .child(`/users/${this.state.user_db_key}/uid`)
-        .set(this.state.user);
+        this.props.database
+          .ref()
+          .child(`/users/${this.state.user_db_key}/uid`)
+          .set(this.state.user);
         this.setState({
           isUserRegistered: true
-        }); } 
+        });
+      }
     }
     checkUserExists(mID) {
+      let userRegistered = false;
       this.props.database
         .ref()
         .child("users")
-        .once("value", snap => {
+        .once("value", function(snap) {
           console.log(snap.val());
-          console.log(snap.child(mID)  != null);
-          return snap.child(mID)  != null;
+          console.log(snap.child(mID) != null);
+          userRegistered = snap.child(mID) != null;
+          // return snap.child(mID)  != null;
+        })
+        .then(() => {
+          if (!userRegistered) {
+            this.register();
+          } 
+          this.registerMessengerUser(mID, res);
+          this.setState({
+            isMessengerUserRegistered: true
+          });
         });
     }
     registerMessengerUser(mID, res) {
@@ -88,20 +100,14 @@ const Auth = AuthPage => MainApp =>
           .child(`/users/${this.state.user_db_key}/messengerUsers`)
           .child(mID)
           .set(true)
-          .then( ()=> {
+          .then(() => {
             // window.location.replace(
             //   decodeURIComponent(res) +
             //     "&authorization_code=" +
             //     this.state.user_db_key
             // );
-            this.setState({
-              isMessengerUserRegistered: true
-            });  
           });
-          
       }
-
-     
     }
     render() {
       if (this.state.isAuthenticated) {
@@ -116,20 +122,19 @@ const Auth = AuthPage => MainApp =>
             .pop()
             .split("&a")[0];
           console.log(decodeURIComponent(res));
+          this.checkUserExists();
           if (!this.checkUserExists(mID)) {
             this.register();
           }
-
-          this.registerMessengerUser(mID, res);
+        } else {
+          return (
+            <MainApp
+              database={this.props.database}
+              user={this.state.user}
+              user_db_key={this.state.user_db_key}
+            />
+          );
         }
-        else{
-        return (
-          <MainApp
-            database={this.props.database}
-            user={this.state.user}
-            user_db_key={this.state.user_db_key}
-          />
-        );}
       } else {
         return <AuthPage />;
       }
