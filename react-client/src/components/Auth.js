@@ -78,7 +78,7 @@ const Auth = AuthPage => MainApp =>
       this.props.database
         .ref()
         .child("users")
-        .once("value", function(snap) {
+        .once("value",  (snap)=> {
           console.log(snap.val());
           // console.log(snap.child(mID) != null);
           let ukey = this.state.user_db_key;
