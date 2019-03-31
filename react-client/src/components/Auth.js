@@ -50,20 +50,7 @@ const Auth = AuthPage => MainApp =>
         }
       });
  
-        if (window.location.href.includes("account_linking_token") && this.state.isAuthenticated) {
-          let hrefs = window.location.href.split("redirect_uri=");
-          let res = hrefs[hrefs.length - 1];
-          let mID = hrefs[0]
-            .split("com/?")
-            .pop()
-            .split("&a")[0];
-          console.log(decodeURIComponent(res));
-          if (!this.checkUserExists(mID)) {
-            this.register( );
-          }
-          this.registerMessengerUser(mID, res);
-          
-          }
+      
     }
     register( ) {
       this.props.database
@@ -102,6 +89,21 @@ const Auth = AuthPage => MainApp =>
     }
     render() {
       if (this.state.isAuthenticated) {
+        if (window.location.href.includes("account_linking_token") && this.state.isAuthenticated) {
+          let hrefs = window.location.href.split("redirect_uri=");
+          let res = hrefs[hrefs.length - 1];
+          let mID = hrefs[0]
+            .split("com/?")
+            .pop()
+            .split("&a")[0];
+          console.log(decodeURIComponent(res));
+          if (!this.checkUserExists(mID)) {
+            this.register( );
+          }
+          
+          this.registerMessengerUser(mID, res);
+          
+          }
         
         
         return (
