@@ -84,7 +84,7 @@ const Auth = AuthPage => MainApp =>
 
           }
           else{
-            console.log("doesnt exist");
+            console.log("doesnt existss");
             this.register();
           }
           this.registerMessengerUser(mID, res);
