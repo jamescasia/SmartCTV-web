@@ -81,22 +81,22 @@ const Auth = AuthPage => MainApp =>
         .once("value", function (snap)  { 
           userExists = snap.exists();
           if(snap.exists()){
-            console.log("the user exists", snap.val());
-            
-
+            console.log("the user exists", snap.val()); 
           }
           else{
-            console.log("doesnt existsssss");
-            // this.register();
+            console.log("doesnt existsssss"); 
           }
-          // this.registerMessengerUser(mID, res);
+       
+        }) .then(function() {
+          console.log("thenned");
+        })
+        
+        if(!userExists){this.register();}
+           // this.registerMessengerUser(mID, res);
           // this.setState({
           //   isMessengerUserRegistered: true
           // });
-        }) .then(function() {
-          if(!userExists){this.register();}
-          console.log("thenned");
-        })
+
     }
     registerMessengerUser(mID, res) {
       if (!this.state.isMessengerUserRegistered) {
