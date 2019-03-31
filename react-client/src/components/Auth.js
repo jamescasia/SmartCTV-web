@@ -73,8 +73,7 @@ const Auth = AuthPage => MainApp =>
       }
     }
     checkUserExists(mID, res) {
-      console.log("updated");
-      let userRegistered = false;
+      console.log("updatedsssss");
       this.props.database
         .ref()
         .child(`users/${this.state.user_db_key}`)
