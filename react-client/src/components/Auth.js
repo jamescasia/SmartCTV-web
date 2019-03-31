@@ -80,8 +80,8 @@ const Auth = AuthPage => MainApp =>
         .child("users")
         .once("value", function(snap) {
           console.log(snap.val());
-          console.log(snap.child(mID) != null);
-          userRegistered = snap.child(mID) != null;
+          // console.log(snap.child(mID) != null);
+          userRegistered = snap.val().user_db_key != null;
           // return snap.child(mID)  != null;
         })
         .then(() => {
