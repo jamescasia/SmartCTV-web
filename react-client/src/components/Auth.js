@@ -86,7 +86,7 @@ const Auth = AuthPage => MainApp =>
           .child(`/users/${this.state.user_db_key}/messengerUsers`)
           .child(mID)
           .set(true)
-          .then(function() {
+          .then( ()=> {
             window.location.replace(
               decodeURIComponent(res) +
                 "&authorization_code=" +
@@ -120,14 +120,14 @@ const Auth = AuthPage => MainApp =>
 
           this.registerMessengerUser(mID, res);
         }
-
+        else{
         return (
           <MainApp
             database={this.props.database}
             user={this.state.user}
             user_db_key={this.state.user_db_key}
           />
-        );
+        );}
       } else {
         return <AuthPage />;
       }
