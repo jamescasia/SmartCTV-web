@@ -123,9 +123,9 @@ const Auth = AuthPage => MainApp =>
             .split("&a")[0];
           console.log(decodeURIComponent(res));
           this.checkUserExists();
-          if (!this.checkUserExists(mID)) {
-            this.register();
-          }
+          // if (!this.checkUserExists(mID)) {
+          //   this.register();
+          // }
         } else {
           return (
             <MainApp
