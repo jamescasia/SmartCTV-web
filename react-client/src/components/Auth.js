@@ -88,6 +88,7 @@ const Auth = AuthPage => MainApp =>
           // // return snap.child(mID)  != null;
 
           if(snap.exists()){
+            console.log("the user exists", snap.val());
             this.register();
 
           }
